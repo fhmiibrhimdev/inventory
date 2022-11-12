@@ -169,22 +169,27 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown
+                                    {{ (request()->is('admin/saldo-awal-item')) ? 'active' : '' }}
+                                    {{ (request()->is('admin/barang-masuk')) ? 'active' : '' }}
+                                    {{ (request()->is('admin/barang-keluar')) ? 'active' : '' }}
+                                    {{ (request()->is('admin/barang-opname')) ? 'active' : '' }}
+                                ">
                                 <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
                                     <i class="far fa-inventory"></i>
                                     <span>Inventory</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item">
+                                    <li class="nav-item {{ (request()->is('admin/saldo-awal-item')) ? 'active' : '' }}">
                                         <a href="{{ url('admin/saldo-awal-item') }}" class="nav-link">Saldo Awal Item</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item {{ (request()->is('admin/barang-masuk')) ? 'active' : '' }}">
                                         <a href="{{ url('admin/barang-masuk') }}" class="nav-link">Barang Masuk</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item {{ (request()->is('admin/barang-keluar')) ? 'active' : '' }}">
                                         <a href="{{ url('admin/barang-keluar') }}" class="nav-link">Barang Keluar</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item {{ (request()->is('admin/barang-opname')) ? 'active' : '' }}">
                                         <a href="{{ url('admin/barang-opname') }}" class="nav-link">Barang Opname</a>
                                     </li>
                                     </li>
