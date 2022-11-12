@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Dashboard\Dashboard;
 use App\Http\Livewire\Inventory\BarangMasuk;
+use App\Http\Livewire\Inventory\BarangKeluar;
 use App\Http\Livewire\Master\DataBarang;
 use App\Http\Livewire\Master\Jenis;
 use App\Http\Livewire\Master\Kategori;
@@ -37,6 +38,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function() {
     Route::get('admin/master-barang', DataBarang::class)->name('admin.master-barang');
 
     Route::get('admin/barang-masuk', BarangMasuk::class)->name('admin.barang-masuk');
+    Route::get('admin/barang-keluar', BarangKeluar::class)->name('admin.barang-keluar');
 });
 
 Route::group(['middleware' => ['auth', 'role:user']], function() {

@@ -1,6 +1,6 @@
 <div>
     <div class="section-header tw-rounded-lg tw-text-black tw-shadow-md">
-        <h4 class="tw-text-lg">Persediaan - Barang Masuk</h4>
+        <h4 class="tw-text-lg">Persediaan - Barang Keluar</h4>
     </div>
     <div class="section-body">
         <div class="row">
@@ -15,7 +15,7 @@
                                         <input type="datetime-local" wire:model='tanggal' name="tanggal" id="tanggal" class="form-control tw-rounded-lg">
                                     </div>
                                     <div class="form-group">
-                                        <label for="id_barang">Nama Item</label>
+                                        <label for="id_barang">Nama Barang</label>
                                         <div wire:ignore>
                                             <select wire:model='id_barang' name="id_barang" id="id_barang" class="form-control tw-rounded-lg">
                                                 @foreach ($barangs as $barang)
@@ -24,14 +24,25 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="qty">Qty</label>
-                                        <input type="text" wire:model='qty' name="qty" id="qty" class="form-control tw-rounded-lg">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="qty_barang">Qty Barang</label>
+                                                <input type="text" id="qty_barang" class="form-control text-center tw-rounded-lg" value="{{ $qty_barang }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="qty">Qty</label>
+                                                <input type="text" wire:model='qty' name="qty" id="qty" class="form-control text-center tw-rounded-lg">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="keterangan">Keterangan</label>
-                                        <textarea wire:model='keterangan' name="keterangan" id="keterangan" style="height: 100px;" class="form-control tw-rounded-lg"></textarea>
+                                        <textarea wire:model='keterangan' name="keterangan" id="keterangan" style="height: 100px;" class="form-control"></textarea>
                                     </div>
+                                    
                                     <button type="submit" wire:click.prevent="store()" wire:loading.attr="disabled"
                                     class="btn btn-outline-success form-control">Save Data</button>
                                 </form>
@@ -39,27 +50,29 @@
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <div class="card tw-rounded-md tw-shadow-md">
-                            <div class="card-body">
-                                <h4 class="tw-text-black tw-text-lg mb-3 text-center">F I L T E R</h4>
-                                <div class="form-group mt-3">
-                                    <label for="filter_id_barang">Nama Item</label>
-                                    <div wire:ignore>
-                                        <select name="filter_id_barang" id="filter_id_barang" wire:model='filter_id_barang' class="form-control tw-rounded-lg">
-                                            <option value="0">-- Pilih Barang --</option>
-                                            @foreach ($barangs as $barang)
-                                                <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
-                                            @endforeach
-                                        </select>
+                        <div class="col-lg-12">
+                            <div class="card tw-rounded-md tw-shadow-md">
+                                <div class="card-body">
+                                    <h4 class="tw-text-black tw-text-lg mb-3 text-center">F I L T E R</h4>
+                                    <div class="form-group mt-3">
+                                        <label for="filter_id_barang">Nama Barang</label>
+                                        <div wire:ignore>
+                                            <select name="filter_id_barang" id="filter_id_barang" wire:model='filter_id_barang' class="form-control tw-rounded-lg">
+                                                <option value="0">-- Pilih Barang --</option>
+                                                @foreach ($barangs as $barang)
+                                                    <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="filter_dari_tanggal">Dari Tanggal</label>
-                                    <input type="date" name="filter_dari_tanggal" id="filter_dari_tanggal" wire:model='filter_dari_tanggal' class="form-control tw-rounded-lg">
-                                </div>
-                                <div class="form-group">
-                                    <label for="filter_sampai_tanggal">s/d Tanggal</label>
-                                    <input type="date" name="filter_sampai_tanggal" id="filter_sampai_tanggal" wire:model='filter_sampai_tanggal' class="form-control tw-rounded-lg">
+                                    <div class="form-group">
+                                        <label for="filter_dari_tanggal">Dari Tanggal</label>
+                                        <input type="date" name="filter_dari_tanggal" id="filter_dari_tanggal" wire:model='filter_dari_tanggal' class="form-control tw-rounded-lg">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="filter_sampai_tanggal">s/d Tanggal</label>
+                                        <input type="date" name="filter_sampai_tanggal" id="filter_sampai_tanggal" wire:model='filter_sampai_tanggal' class="form-control tw-rounded-lg">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -67,8 +80,8 @@
                 </div>
             </div>
             <div class="col-lg-9">
-                <div class="card tw-rounded-md tw-shadow-md">
-                    <div class="card-body px-0">
+                <div class="card card-primary tw-rounded-md">
+                    <div class="card-body px-0 tw-shadow-md">
                         <div class="row mb-3 px-4">
                             <div class="col-4 col-lg-2 tw-flex">
                                 <select class="form-control" wire:model='lengthData'>
@@ -96,7 +109,7 @@
                                 <thead>
                                     <tr class="tw-border-b tw-text-xs text-center text-uppercase">
                                         <th class="p-3">Tanggal</th>
-                                        <th class="p-3">Nama Item</th>
+                                        <th class="p-3">Nama Barang</th>
                                         <th class="p-3">QTY</th>
                                         <th class="p-3">Keterangan</th>
                                         <th class="p-3 text-center"></th>
@@ -161,7 +174,7 @@
                             <input type="datetime-local" wire:model='tanggal' name="tanggal" id="tanggal" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="id_barang">Nama Item</label>
+                            <label for="id_barang">Nama Barang</label>
                             <select wire:model='id_barang' name="id_barang" id="id_barang" class="form-control">
                                 @foreach ($barangs as $barang)
                                     <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
@@ -206,16 +219,26 @@
                             <input type="datetime-local" wire:model='tanggal' name="tanggal" id="tanggal" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="id_barang">Nama Item</label>
+                            <label for="id_barang">Nama Barang</label>
                             <select wire:model='id_barang' name="id_barang" id="id_barang" class="form-control">
                                 @foreach ($barangs as $barang)
                                     <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="qty">Qty</label>
-                            <input type="text" wire:model='qty' name="qty" id="qty" class="form-control">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="qty_barang">Qty Barang</label>
+                                    <input type="text" id="qty_barang" class="form-control text-center tw-rounded-lg" value="{{ $qty_barang }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="qty">Qty</label>
+                                    <input type="text" wire:model='qty' name="qty" id="qty" class="form-control text-center tw-rounded-lg">
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
