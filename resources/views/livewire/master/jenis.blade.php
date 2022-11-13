@@ -1,6 +1,6 @@
 <div>
     <div class="section-header tw-rounded-lg tw-text-black tw-shadow-md tw-shadow-gray-200">
-        <h4 class="tw-text-lg">Master Data Jenis</h4>
+        <h4 class="tw-text-lg">Master Data - Jenis</h4>
     </div>
 
     <div class="section-body">

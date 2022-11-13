@@ -5,76 +5,27 @@
     <div class="section-body">
         <div class="row">
             <div class="col-lg-3">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card tw-rounded-md tw-shadow-md">
-                            <div class="card-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="tanggal">Tanggal</label>
-                                        <input type="datetime-local" wire:model='tanggal' name="tanggal" id="tanggal" class="form-control tw-rounded-lg">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="id_barang">Nama Barang</label>
-                                        <div wire:ignore>
-                                            <select wire:model='id_barang' name="id_barang" id="id_barang" class="form-control tw-rounded-lg">
-                                                @foreach ($barangs as $barang)
-                                                    <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="qty_barang">Qty Barang</label>
-                                                <input type="text" id="qty_barang" class="form-control text-center tw-rounded-lg" value="{{ $qty_barang }}" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="qty">Qty</label>
-                                                <input type="text" wire:model='qty' name="qty" id="qty" class="form-control text-center tw-rounded-lg">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="keterangan">Keterangan</label>
-                                        <textarea wire:model='keterangan' name="keterangan" id="keterangan" style="height: 100px;" class="form-control"></textarea>
-                                    </div>
-                                    
-                                    <button type="submit" wire:click.prevent="store()" wire:loading.attr="disabled"
-                                    class="btn btn-outline-success form-control">Save Data</button>
-                                </form>
+                <div class="card tw-rounded-md tw-shadow-md">
+                    <div class="card-body">
+                        <h4 class="tw-text-black tw-text-lg mb-3 text-center">F I L T E R</h4>
+                        <div class="form-group mt-3">
+                            <label for="filter_id_barang">Nama Barang</label>
+                            <div wire:ignore>
+                                <select name="filter_id_barang" id="filter_id_barang" wire:model='filter_id_barang' class="form-control tw-rounded-lg">
+                                    <option value="0">-- Pilih Barang --</option>
+                                    @foreach ($barangs as $barang)
+                                        <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="col-lg-12">
-                            <div class="card tw-rounded-md tw-shadow-md">
-                                <div class="card-body">
-                                    <h4 class="tw-text-black tw-text-lg mb-3 text-center">F I L T E R</h4>
-                                    <div class="form-group mt-3">
-                                        <label for="filter_id_barang">Nama Barang</label>
-                                        <div wire:ignore>
-                                            <select name="filter_id_barang" id="filter_id_barang" wire:model='filter_id_barang' class="form-control tw-rounded-lg">
-                                                <option value="0">-- Pilih Barang --</option>
-                                                @foreach ($barangs as $barang)
-                                                    <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="filter_dari_tanggal">Dari Tanggal</label>
-                                        <input type="date" name="filter_dari_tanggal" id="filter_dari_tanggal" wire:model='filter_dari_tanggal' class="form-control tw-rounded-lg">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="filter_sampai_tanggal">s/d Tanggal</label>
-                                        <input type="date" name="filter_sampai_tanggal" id="filter_sampai_tanggal" wire:model='filter_sampai_tanggal' class="form-control tw-rounded-lg">
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="filter_dari_tanggal">Dari Tanggal</label>
+                            <input type="date" name="filter_dari_tanggal" id="filter_dari_tanggal" wire:model='filter_dari_tanggal' class="form-control tw-rounded-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="filter_sampai_tanggal">s/d Tanggal</label>
+                            <input type="date" name="filter_sampai_tanggal" id="filter_sampai_tanggal" wire:model='filter_sampai_tanggal' class="form-control tw-rounded-lg">
                         </div>
                     </div>
                 </div>
@@ -157,7 +108,7 @@
         </button>
     </div>
 
-    <div class="modal fade" wire:ignore.self id="tambahDataModal" tabindex="-1" aria-labelledby="tambahDataModalLabel"
+    <div class="modal fade" wire:ignore.self id="tambahDataModal" aria-labelledby="tambahDataModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -200,7 +151,7 @@
         </div>
     </div>
 
-    <div class="modal fade" wire:ignore.self id="ubahDataModal" tabindex="-1" aria-labelledby="ubahDataModalLabel"
+    <div class="modal fade" wire:ignore.self id="ubahDataModal" aria-labelledby="ubahDataModalLabel"
         aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">

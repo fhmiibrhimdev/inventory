@@ -26,7 +26,7 @@ class BarangKeluar extends Component
         $this->tanggal = date('Y-m-d H:i');
         $this->id_barang = DataBarang::min('id');
         $this->qty = '1';
-        $this->keterangan = '-';
+        $this->keterangan = 'Barang Keluar';
         $this->filter_dari_tanggal = Carbon::now()->startOfMonth()->format('Y-m-d');
         $this->filter_sampai_tanggal = Carbon::now()->endOfMonth()->format('Y-m-d');
         $this->filter_id_barang = 0;
@@ -41,6 +41,7 @@ class BarangKeluar extends Component
     private function resetInputFields()
     {
         $this->tanggal = date('Y-m-d H:i');
+        $this->keterangan = 'Barang Keluar';
         $this->qty = '1';
     }
 
@@ -100,6 +101,7 @@ class BarangKeluar extends Component
                 $query->orWhere('persediaan.keterangan', 'LIKE', $searchTerm);
             })
             ->where('persediaan.status', 'Out')
+            ->where('persediaan.opname', 'no')
             ->orderBy('persediaan.id', 'DESC')
             ->paginate($lengthData);
         }  else if ( $this->filter_id_barang > 0 ) {
@@ -114,6 +116,7 @@ class BarangKeluar extends Component
             ->where('data_barang.id', $this->filter_id_barang)
             ->whereBetween('persediaan.created_at', [$this->filter_dari_tanggal, $this->filter_sampai_tanggal])
             ->where('persediaan.status', 'Out')
+            ->where('persediaan.opname', 'no')
             ->orderBy('persediaan.id', 'DESC')
             ->paginate($lengthData);
         }

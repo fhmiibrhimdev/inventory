@@ -19,6 +19,10 @@ class CreatePersediaansTable extends Migration
             $table->text('id_barang');
             $table->text('qty');
             $table->text('keterangan');
+            $table->text('buku')->default('-');
+            $table->text('fisik')->default('-');
+            $table->text('selisih')->default('-');
+            $table->text('opname')->default('no');
             $table->text('status');
             $table->timestamps();
         });

@@ -27,6 +27,14 @@ class DataBarang extends Component
     
     public function render()
     {
+        $kodeBarang = ModelsDataBarang::max('kode_item');
+        $urutan = (int)substr($kodeBarang, 4, 4);
+        $urutan++;
+        $huruf = 'BRG-';
+        $kodeBarang = $huruf . sprintf("%04s", $urutan);
+
+        $this->kode_item = $kodeBarang;
+
         $searchTerm = '%'.$this->searchTerm.'%';
         $lengthData = $this->lengthData;
     
@@ -62,7 +70,6 @@ class DataBarang extends Component
     
     public function mount()
     {
-        $this->kode_item = '';
         $this->nama_item = '';
         $this->id_jenis  = Jenis::min('id');
         $this->id_merek  = Merek::min('id');
@@ -74,7 +81,6 @@ class DataBarang extends Component
     
     private function resetInputFields()
     {
-        $this->kode_item = '';
         $this->nama_item = '';
     }
     
@@ -97,13 +103,13 @@ class DataBarang extends Component
         $this->validateInput();
         ModelsDataBarang::create([
             'kode_item'     => $this->kode_item,
-            'nama_item'     => $this->nama_item,
+            'nama_item'     => strtoupper($this->nama_item),
             'id_jenis'      => $this->id_jenis,
             'id_merek'      => $this->id_merek,
             'id_satuan'     => $this->id_satuan,
             'id_kategori'   => $this->id_kategori,
             'id_rak'        => $this->id_rak,
-            'keterangan'    => $this->keterangan,
+            'keterangan'    => strtoupper($this->keterangan),
             'stock'         => '0',
         ]);
         $this->successInsert();
@@ -132,13 +138,13 @@ class DataBarang extends Component
             $data = ModelsDataBarang::findOrFail($this->dataId);
             $data->update([
                 'kode_item'     => $this->kode_item,
-                'nama_item'     => $this->nama_item,
+                'nama_item'     => strtoupper($this->nama_item),
                 'id_jenis'      => $this->id_jenis,
                 'id_merek'      => $this->id_merek,
                 'id_satuan'     => $this->id_satuan,
                 'id_kategori'   => $this->id_kategori,
                 'id_rak'        => $this->id_rak,
-                'keterangan'    => $this->keterangan,
+                'keterangan'    => strtoupper($this->keterangan),
                 'stock'         => '0',
             ]);
             $this->successUpdate();

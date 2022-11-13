@@ -1,6 +1,6 @@
 <div>
     <div class="section-header tw-rounded-lg tw-text-black tw-shadow-md tw-shadow-gray-200">
-        <h4 class="tw-text-lg">Master Data Barang</h4>
+        <h4 class="tw-text-lg">Master Data - Barang</h4>
     </div>
 
     <div class="section-body">
@@ -46,7 +46,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($data as $row)
-                                        <tr class="tw-bg-white tw-border tw-text-uppercase tw-border-gray-200 hover:tw-bg-gray-50 tw-text-center">
+                                        <tr class="tw-bg-white tw-border tw-border-gray-200 hover:tw-bg-gray-50 tw-text-center">
                                             <td class="p-3">{{ $row->kode_item }}</td>
                                             <td class="p-3">{{ $row->nama_item }}</td>
                                             <td class="p-3">{{ $row->stock }}</td>

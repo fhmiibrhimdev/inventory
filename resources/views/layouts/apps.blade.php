@@ -27,6 +27,11 @@
     <link rel="stylesheet" href="{{ asset('/fpro/css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/style.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+    <style>
+        tr#table-row:nth-child(odd) {
+            background-color: rgb(249 250 251 / 1) !important;
+        }
+    </style>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @livewireStyles
@@ -145,6 +150,7 @@
                                     {{ (request()->is('admin/master-jenis')) ? 'active' : '' }}
                                     {{ (request()->is('admin/master-merek')) ? 'active' : '' }}
                                     {{ (request()->is('admin/master-satuan')) ? 'active' : '' }}
+                                    {{ (request()->is('admin/master-rak')) ? 'active' : '' }}
                                     {{ (request()->is('admin/master-barang')) ? 'active' : '' }}
                                 ">
                                 <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
@@ -164,6 +170,9 @@
                                     <li class="nav-item {{ (request()->is('admin/master-satuan')) ? 'active' : '' }}">
                                         <a href="{{ url('admin/master-satuan') }}" class="nav-link">Satuan</a>
                                     </li>
+                                    <li class="nav-item {{ (request()->is('admin/master-rak')) ? 'active' : '' }}">
+                                        <a href="{{ url('admin/master-rak') }}" class="nav-link">Lokasi Rak</a>
+                                    </li>
                                     <li class="nav-item {{ (request()->is('admin/master-barang')) ? 'active' : '' }}">
                                         <a href="{{ url('admin/master-barang') }}" class="nav-link">Data Barang</a>
                                     </li>
@@ -177,7 +186,7 @@
                                 ">
                                 <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
                                     <i class="far fa-inventory"></i>
-                                    <span>Inventory</span>
+                                    <span>Persediaan</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item {{ (request()->is('admin/saldo-awal-item')) ? 'active' : '' }}">
@@ -194,6 +203,9 @@
                                     </li>
                                     </li>
                                 </ul>
+                            </li>
+                            <li class="nav-item {{ (request()->is('admin/kartu-stock')) ? 'active' : '' }}">
+                                <a href="{{ url('admin/kartu-stock') }}" class="nav-link"><i class="far fa-pallet"></i><span>Kartu Stock</span></a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">

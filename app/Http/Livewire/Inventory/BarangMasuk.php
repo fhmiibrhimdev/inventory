@@ -26,7 +26,7 @@ class BarangMasuk extends Component
         $this->tanggal = date('Y-m-d H:i');
         $this->id_barang = DataBarang::min('id');
         $this->qty = '1';
-        $this->keterangan = '-';
+        $this->keterangan = 'Barang Masuk';
         $this->filter_dari_tanggal = Carbon::now()->startOfMonth()->format('Y-m-d');
         $this->filter_sampai_tanggal = Carbon::now()->endOfMonth()->format('Y-m-d');
         $this->filter_id_barang = 0;
@@ -42,6 +42,7 @@ class BarangMasuk extends Component
     {
         // $this->tanggal = date('Y-m-d H:i');
         $this->qty = '1';
+        $this->keterangan = 'Barang Masuk';
     }
 
     private function alertStockMinus() {
@@ -100,6 +101,7 @@ class BarangMasuk extends Component
             })
             ->whereBetween('persediaan.created_at', [$this->filter_dari_tanggal, $this->filter_sampai_tanggal])
             ->where('persediaan.status', 'In')
+            ->where('persediaan.opname', 'no')
             ->orderBy('persediaan.id', 'DESC')
             ->paginate($lengthData ?? 5);
         } else if ( $this->filter_id_barang > 0 ) {
@@ -114,6 +116,7 @@ class BarangMasuk extends Component
             ->where('data_barang.id', $this->filter_id_barang)
             ->whereBetween('persediaan.created_at', [$this->filter_dari_tanggal, $this->filter_sampai_tanggal])
             ->where('persediaan.status', 'In')
+            ->where('persediaan.opname', 'no')
             ->orderBy('persediaan.id', 'DESC')
             ->paginate($lengthData ?? 5);
         }
