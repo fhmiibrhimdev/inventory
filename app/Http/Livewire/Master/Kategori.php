@@ -17,39 +17,39 @@ class Kategori extends Component
     public $updateMode = false;
     public $idRemoved = null;
     protected $paginationTheme = 'bootstrap';
-    
+
     public function render()
     {
-        $searchTerm = '%'.$this->searchTerm.'%';
+        $searchTerm = '%' . $this->searchTerm . '%';
         $lengthData = $this->lengthData;
-    
+
         $data = ModelsKategori::where('kode_kategori', 'LIKE', $searchTerm)
-                    ->orWhere('nama_kategori', 'LIKE', $searchTerm)
-                    ->orderBy('id', 'DESC')
-                    ->paginate($lengthData);
-    
+            ->orWhere('nama_kategori', 'LIKE', $searchTerm)
+            ->orderBy('id', 'DESC')
+            ->paginate($lengthData);
+
         return view('livewire.master.kategori', compact('data'))
-        ->extends('layouts.apps', ['title' => 'Mast Data - Kategori']);;
+            ->extends('layouts.apps', ['title' => 'Mast Data - Kategori']);;
     }
-    
+
     public function mount()
     {
         $this->kode_kategori = '';
         $this->nama_kategori = '';
     }
-    
+
     private function resetInputFields()
     {
         $this->kode_kategori = '';
         $this->nama_kategori = '';
     }
-    
+
     public function cancel()
     {
         $this->updateMode = false;
         $this->resetInputFields();
     }
-    
+
     private function validateInput()
     {
         $this->validate([
@@ -57,7 +57,7 @@ class Kategori extends Component
             'nama_kategori'  => 'required'
         ]);
     }
-    
+
     public function store()
     {
         $this->validateInput();
@@ -65,62 +65,61 @@ class Kategori extends Component
             'kode_kategori'  => $this->kode_kategori,
             'nama_kategori'  => $this->kode_kategori,
         ]);
-        $this->successInsert();
+        $this->alertSuccess('insert');
     }
-    
+
     public function edit($id)
     {
         $this->updateMode = true;
-        $data = ModelsKategori::where('id',$id)->first();
+        $data = ModelsKategori::where('id', $id)->first();
         $this->dataId = $id;
         $this->kode_kategori = $data->kode_kategori;
         $this->nama_kategori = $data->nama_kategori;
     }
-    
+
     public function update()
     {
         $this->validateInput();
-    
+
         if ($this->dataId) {
             $data = ModelsKategori::findOrFail($this->dataId);
             $data->update([
                 'kode_kategori'  => $this->kode_kategori,
                 'nama_kategori'  => $this->nama_kategori,
             ]);
-            $this->successUpdate();
+            $this->alertSuccess('update');
         }
     }
-    
+
     public function deleteConfirm($id)
     {
         $this->idRemoved = $id;
         $this->dispatchBrowserEvent('swal');
     }
-    
+
     public function delete()
     {
         $data = ModelsKategori::findOrFail($this->idRemoved);
         $data->delete();
     }
-    
-    private function successInsert()
+
+    private function alertSuccess($status)
     {
+        switch ($status) {
+            case 'insert':
+                $text = 'Data Inserted Successfully!.';
+                break;
+            case 'update':
+                $this->updateMode = false;
+                $text = 'Data Updated Successfully!.';
+                break;
+            default:
+                break;
+        }
         $this->dispatchBrowserEvent('swal:modal', [
-            'type' => 'success',  
-            'message' => 'Successfully!', 
-            'text' => 'Data Inserted Successfully!.'
-        ]);
-        $this->resetInputFields();
-        $this->emit('dataStore');
-    }
-    
-    private function successUpdate()
-    {
-        $this->updateMode = false;
-        $this->dispatchBrowserEvent('swal:modal', [
-            'type' => 'success',  
-            'message' => 'Successfully!', 
-            'text' => 'Data Updated Successfully!.'
+            'type'      => 'success',
+            'message'   => 'Successfully!',
+            'text'      => $text,
         ]);
         $this->resetInputFields();
         $this->emit('dataStore');

@@ -25,8 +25,7 @@
                             </div>
                             <div class="col-8 col-lg-4 ml-auto tw-flex">
                                 <span class="mt-2 text-dark mr-1 tw-hidden lg:tw-block">Search:</span>
-                                <input wire:model="searchTerm" type="search" class="form-control tw-rounded-lg ml-auto"
-                                    placeholder="Search here.." wire:model='searchTerm'>
+                                <input wire:model="searchTerm" type="search" class="form-control tw-rounded-lg ml-auto" placeholder="Search here.." wire:model='searchTerm'>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -46,30 +45,30 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($data as $row)
-                                        <tr class="tw-bg-white tw-border tw-border-gray-200 hover:tw-bg-gray-50 tw-text-center">
-                                            <td class="p-3">{{ $row->kode_item }}</td>
-                                            <td class="p-3">{{ $row->nama_item }}</td>
-                                            <td class="p-3">{{ $row->stock }}</td>
-                                            <td class="p-3">{{ $row->nama_jenis }}</td>
-                                            <td class="p-3">{{ $row->nama_merek }}</td>
-                                            <td class="p-3">{{ $row->kode_kategori }}</td>
-                                            <td class="p-3">{{ $row->nama_rak }}</td>
-                                            <td class="p-3">{{ $row->keterangan }}</td>
-                                            <td class="p-3 text-center">
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#ubahDataModal" wire:click="edit({{ $row->id }})">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-danger" wire:click.prevent="deleteConfirm({{ $row->id }})">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                    <tr class="tw-bg-white tw-border tw-border-gray-200 hover:tw-bg-gray-50 tw-text-center">
+                                        <td class="p-3">{{ $row->kode_item }}</td>
+                                        <td class="p-3">{{ $row->nama_item }}</td>
+                                        <td class="p-3">{{ $row->stock }}</td>
+                                        <td class="p-3">{{ $row->nama_jenis }}</td>
+                                        <td class="p-3">{{ $row->nama_merek }}</td>
+                                        <td class="p-3">{{ $row->kode_kategori }}</td>
+                                        <td class="p-3">{{ $row->nama_rak }}</td>
+                                        <td class="p-3">{{ $row->keterangan }}</td>
+                                        <td class="p-3 text-center">
+                                            <button class="btn btn-primary" data-toggle="modal" data-target="#ubahDataModal" wire:click="edit({{ $row->id }})">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-danger" wire:click.prevent="deleteConfirm({{ $row->id }})">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
                                     @empty
                                     <tr class="text-center">
                                         <td class="p-3" colspan="9">
                                             No data available in table
                                         </td>
-                                    </tr>   
+                                    </tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -81,239 +80,236 @@
                 </div>
             </div>
         </div>
-        <button
-            class="tw-fixed tw-right-[30px] tw-bottom-[50px] tw-w-14 tw-h-14 tw-shadow-2xl tw-rounded-full tw-bg-blue-700 tw-z-40 text-white hover:tw-bg-blue-900 hover:tw-border-slate-600"
-            data-toggle="modal" data-target="#tambahDataModal">
+        <button class="tw-fixed tw-right-[30px] tw-bottom-[50px] tw-w-14 tw-h-14 tw-shadow-2xl tw-rounded-full tw-bg-blue-700 tw-z-40 text-white hover:tw-bg-blue-900 hover:tw-border-slate-600" data-toggle="modal" data-target="#tambahDataModal">
             <i class="far fa-plus"></i>
         </button>
     </div>
 
     {{-- Insert Data Modal --}}
-		<div class="modal fade" wire:ignore.self id="tambahDataModal" aria-labelledby="tambahDataModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="tambahDataModalLabel">Tambah Data</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<form>
-						<div class="modal-body">
-							<div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="kode_item">Kode Barang</label>
-                                        <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="kode_item" id="kode_item" wire:model='kode_item'>
-                                        @error('kode_item') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="nama_item">Nama Barang</label>
-                                        <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="nama_item" id="nama_item" wire:model='nama_item'>
-                                        @error('nama_item') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+    <div class="modal fade" wire:ignore.self id="tambahDataModal" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tambahDataModalLabel">Tambah Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="kode_item">Kode Barang</label>
+                                    <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="kode_item" id="kode_item" wire:model='kode_item'>
+                                    @error('kode_item') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="id_jenis">Nama Jenis</label>
-                                        <div wire:ignore>
-                                            <select class="form-control tw-rounded-lg" name="id_jenis" id="id_jenis" wire:model='id_jenis'>
-                                                @foreach ($jenis as $jeniss)
-                                                    <option value="{{ $jeniss->id }}">{{ $jeniss->nama_jenis }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('id_jenis') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="id_merek">Nama Merek</label>
-                                        <div wire:ignore>
-                                            <select class="form-control tw-rounded-lg" name="id_merek" id="id_merek" wire:model='id_merek'>
-                                                @foreach ($mereks as $merek)
-                                                    <option value="{{ $merek->id }}">{{ $merek->nama_merek }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('id_merek') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="id_satuan">Nama Satuan</label>
-                                        <div wire:ignore>
-                                            <select class="form-control tw-rounded-lg" name="id_satuan" id="id_satuan" wire:model='id_satuan'>
-                                                @foreach ($satuans as $satuan)
-                                                    <option value="{{ $satuan->id }}">{{ $satuan->nama_satuan }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('id_satuan') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="nama_item">Nama Barang</label>
+                                    <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="nama_item" id="nama_item" wire:model='nama_item'>
+                                    @error('nama_item') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="id_kategori">Nama Kategori</label>
-                                        <div wire:ignore>
-                                            <select class="form-control tw-rounded-lg" name="id_kategori" id="id_kategori" wire:model='id_kategori'>
-                                                @foreach ($kategoris as $kategori)
-                                                    <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('id_kategori') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="id_jenis">Nama Jenis</label>
+                                    <div wire:ignore>
+                                        <select class="form-control tw-rounded-lg" name="id_jenis" id="id_jenis" wire:model='id_jenis'>
+                                            @foreach ($jenis as $jeniss)
+                                            <option value="{{ $jeniss->id }}">{{ $jeniss->nama_jenis }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="id_rak">Lokasi Rak</label>
-                                        <div wire:ignore>
-                                            <select class="form-control tw-rounded-lg" name="id_rak" id="id_rak" wire:model='id_rak'>
-                                                @foreach ($raks as $rak)
-                                                    <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('id_rak') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+                                    @error('id_jenis') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="keterangan">Keterangan</label>
-                                <textarea class="form-control tw-rounded-lg" name="keterangan" id="keterangan" wire:model='keterangan' style="height: 100px"></textarea>
-                                @error('keterangan') <span class="text-danger">{{ $message }}</span> @enderror
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="id_merek">Nama Merek</label>
+                                    <div wire:ignore>
+                                        <select class="form-control tw-rounded-lg" name="id_merek" id="id_merek" wire:model='id_merek'>
+                                            @foreach ($mereks as $merek)
+                                            <option value="{{ $merek->id }}">{{ $merek->nama_merek }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('id_merek') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
                             </div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="submit" wire:click.prevent="store()" wire:loading.attr="disabled" class="btn btn-primary">Save Data</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	{{-- Insert Data Modal --}}
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="id_satuan">Nama Satuan</label>
+                                    <div wire:ignore>
+                                        <select class="form-control tw-rounded-lg" name="id_satuan" id="id_satuan" wire:model='id_satuan'>
+                                            @foreach ($satuans as $satuan)
+                                            <option value="{{ $satuan->id }}">{{ $satuan->nama_satuan }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('id_satuan') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="id_kategori">Nama Kategori</label>
+                                    <div wire:ignore>
+                                        <select class="form-control tw-rounded-lg" name="id_kategori" id="id_kategori" wire:model='id_kategori'>
+                                            @foreach ($kategoris as $kategori)
+                                            <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('id_kategori') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="id_rak">Lokasi Rak</label>
+                                    <div wire:ignore>
+                                        <select class="form-control tw-rounded-lg" name="id_rak" id="id_rak" wire:model='id_rak'>
+                                            @foreach ($raks as $rak)
+                                            <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('id_rak') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="keterangan">Keterangan</label>
+                            <textarea class="form-control tw-rounded-lg" name="keterangan" id="keterangan" wire:model='keterangan' style="height: 100px"></textarea>
+                            @error('keterangan') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" wire:click.prevent="store()" wire:loading.attr="disabled" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- Insert Data Modal --}}
 
     {{-- Update Data Modal --}}
-		<div class="modal fade" wire:ignore.self id="ubahDataModal" aria-labelledby="ubahDataModalLabel" aria-hidden="true"  data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="ubahDataModalLabel">Edit Data</h5>
-						<button type="button" wire:click.prevent='cancel()' class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<form>
-						<div class="modal-body">
-							<input type="hidden" wire:model='dataId'>
-							<div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="kode_item">Kode Barang</label>
-                                        <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="kode_item" id="kode_item" wire:model='kode_item'>
-                                        @error('kode_item') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="nama_item">Nama Barang</label>
-                                        <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="nama_item" id="nama_item" wire:model='nama_item'>
-                                        @error('nama_item') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+    <div class="modal fade" wire:ignore.self id="ubahDataModal" aria-labelledby="ubahDataModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ubahDataModalLabel">Edit Data</h5>
+                    <button type="button" wire:click.prevent='cancel()' class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <input type="hidden" wire:model='dataId'>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="kode_item">Kode Barang</label>
+                                    <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="kode_item" id="kode_item" wire:model='kode_item'>
+                                    @error('kode_item') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="edit_id_jenis">Nama Jenis</label>
-                                        <div wire:ignore>
-                                            <select class="form-control tw-rounded-lg" name="edit_id_jenis" id="edit_id_jenis" wire:model='id_jenis'>
-                                                @foreach ($jenis as $jeniss)
-                                                    <option value="{{ $jeniss->id }}">{{ $jeniss->nama_jenis }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('id_jenis') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="edit_id_merek">Nama Merek</label>
-                                        <div wire:ignore>
-                                            <select class="form-control tw-rounded-lg" name="edit_id_merek" id="edit_id_merek" wire:model='id_merek'>
-                                                @foreach ($mereks as $merek)
-                                                    <option value="{{ $merek->id }}">{{ $merek->nama_merek }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('id_merek') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="edit_id_satuan">Nama Satuan</label>
-                                        <div wire:ignore>
-                                            <select class="form-control tw-rounded-lg" name="edit_id_satuan" id="edit_id_satuan" wire:model='id_satuan'>
-                                                @foreach ($satuans as $satuan)
-                                                    <option value="{{ $satuan->id }}">{{ $satuan->nama_satuan }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('id_satuan') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="nama_item">Nama Barang</label>
+                                    <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="nama_item" id="nama_item" wire:model='nama_item'>
+                                    @error('nama_item') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="edit_id_kategori">Nama Kategori</label>
-                                        <div wire:ignore>
-                                            <select class="form-control tw-rounded-lg" name="edit_id_kategori" id="edit_id_kategori" wire:model='id_kategori'>
-                                                @foreach ($kategoris as $kategori)
-                                                    <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('id_kategori') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="edit_id_jenis">Nama Jenis</label>
+                                    <div wire:ignore>
+                                        <select class="form-control tw-rounded-lg" name="edit_id_jenis" id="edit_id_jenis" wire:model='id_jenis'>
+                                            @foreach ($jenis as $jeniss)
+                                            <option value="{{ $jeniss->id }}">{{ $jeniss->nama_jenis }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="edit_id_rak">Lokasi Rak</label>
-                                        <div wire:ignore>
-                                            <select class="form-control tw-rounded-lg" name="edit_id_rak" id="edit_id_rak" wire:model='id_rak'>
-                                                @foreach ($raks as $rak)
-                                                    <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('id_rak') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
+                                    @error('id_jenis') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="keterangan">Keterangan</label>
-                                <textarea class="form-control tw-rounded-lg" name="keterangan" id="keterangan" wire:model='keterangan' style="height: 100px"></textarea>
-                                @error('keterangan') <span class="text-danger">{{ $message }}</span> @enderror
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="edit_id_merek">Nama Merek</label>
+                                    <div wire:ignore>
+                                        <select class="form-control tw-rounded-lg" name="edit_id_merek" id="edit_id_merek" wire:model='id_merek'>
+                                            @foreach ($mereks as $merek)
+                                            <option value="{{ $merek->id }}">{{ $merek->nama_merek }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('id_merek') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
                             </div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" wire:click.prevent='cancel()' class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button wire:click.prevent="update()" wire:loading.attr="disabled" type="button" class="btn btn-primary">Save Data</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="edit_id_satuan">Nama Satuan</label>
+                                    <div wire:ignore>
+                                        <select class="form-control tw-rounded-lg" name="edit_id_satuan" id="edit_id_satuan" wire:model='id_satuan'>
+                                            @foreach ($satuans as $satuan)
+                                            <option value="{{ $satuan->id }}">{{ $satuan->nama_satuan }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('id_satuan') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="edit_id_kategori">Nama Kategori</label>
+                                    <div wire:ignore>
+                                        <select class="form-control tw-rounded-lg" name="edit_id_kategori" id="edit_id_kategori" wire:model='id_kategori'>
+                                            @foreach ($kategoris as $kategori)
+                                            <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('id_kategori') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="edit_id_rak">Lokasi Rak</label>
+                                    <div wire:ignore>
+                                        <select class="form-control tw-rounded-lg" name="edit_id_rak" id="edit_id_rak" wire:model='id_rak'>
+                                            @foreach ($raks as $rak)
+                                            <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('id_rak') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="keterangan">Keterangan</label>
+                            <textarea class="form-control tw-rounded-lg" name="keterangan" id="keterangan" wire:model='keterangan' style="height: 100px"></textarea>
+                            @error('keterangan') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" wire:click.prevent='cancel()' class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button wire:click.prevent="update()" wire:loading.attr="disabled" type="button" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     {{-- Update Data Modal --}}
 
 
@@ -321,62 +317,62 @@
 
 @push('scripts')
 
-    <script>
-        $(document).ready(function () {
-            $('#id_jenis').select2();
-            $('#id_merek').select2();
-            $('#id_satuan').select2();
-            $('#id_kategori').select2();
-            $('#id_rak').select2();
+<script>
+    $(document).ready(function() {
+        $('#id_jenis').select2();
+        $('#id_merek').select2();
+        $('#id_satuan').select2();
+        $('#id_kategori').select2();
+        $('#id_rak').select2();
 
-            $('#id_jenis').on('change', function (e) {
-                var data = $('#id_jenis').select2("val");
-                @this.set('id_jenis', data);
-            });
-            $('#id_merek').on('change', function (e) {
-                var data = $('#id_merek').select2("val");
-                @this.set('id_merek', data);
-            });
-            $('#id_satuan').on('change', function (e) {
-                var data = $('#id_satuan').select2("val");
-                @this.set('id_satuan', data);
-            });
-            $('#id_kategori').on('change', function (e) {
-                var data = $('#id_kategori').select2("val");
-                @this.set('id_kategori', data);
-            });
-            $('#id_rak').on('change', function (e) {
-                var data = $('#id_rak').select2("val");
-                @this.set('id_rak', data);
-            });
-
-            $('#edit_id_jenis').select2();
-            $('#edit_id_merek').select2();
-            $('#edit_id_satuan').select2();
-            $('#edit_id_kategori').select2();
-            $('#edit_id_rak').select2();
-
-            $('#edit_id_jenis').on('change', function (e) {
-                var data = $('#edit_id_jenis').select2("val");
-                @this.set('edit_id_jenis', data);
-            });
-            $('#edit_id_merek').on('change', function (e) {
-                var data = $('#edit_id_merek').select2("val");
-                @this.set('edit_id_merek', data);
-            });
-            $('#edit_id_satuan').on('change', function (e) {
-                var data = $('#edit_id_satuan').select2("val");
-                @this.set('edit_id_satuan', data);
-            });
-            $('#edit_id_kategori').on('change', function (e) {
-                var data = $('#edit_id_kategori').select2("val");
-                @this.set('edit_id_kategori', data);
-            });
-            $('#edit_id_rak').on('change', function (e) {
-                var data = $('#edit_id_rak').select2("val");
-                @this.set('edit_id_rak', data);
-            });
+        $('#id_jenis').on('change', function(e) {
+            var data = $('#id_jenis').select2("val");
+            @this.set('id_jenis', data);
         });
-    </script>
+        $('#id_merek').on('change', function(e) {
+            var data = $('#id_merek').select2("val");
+            @this.set('id_merek', data);
+        });
+        $('#id_satuan').on('change', function(e) {
+            var data = $('#id_satuan').select2("val");
+            @this.set('id_satuan', data);
+        });
+        $('#id_kategori').on('change', function(e) {
+            var data = $('#id_kategori').select2("val");
+            @this.set('id_kategori', data);
+        });
+        $('#id_rak').on('change', function(e) {
+            var data = $('#id_rak').select2("val");
+            @this.set('id_rak', data);
+        });
+
+        $('#edit_id_jenis').select2();
+        $('#edit_id_merek').select2();
+        $('#edit_id_satuan').select2();
+        $('#edit_id_kategori').select2();
+        $('#edit_id_rak').select2();
+
+        $('#edit_id_jenis').on('change', function(e) {
+            var data = $('#edit_id_jenis').select2("val");
+            @this.set('id_jenis', data);
+        });
+        $('#edit_id_merek').on('change', function(e) {
+            var data = $('#edit_id_merek').select2("val");
+            @this.set('id_merek', data);
+        });
+        $('#edit_id_satuan').on('change', function(e) {
+            var data = $('#edit_id_satuan').select2("val");
+            @this.set('id_satuan', data);
+        });
+        $('#edit_id_kategori').on('change', function(e) {
+            var data = $('#edit_id_kategori').select2("val");
+            @this.set('id_kategori', data);
+        });
+        $('#edit_id_rak').on('change', function(e) {
+            var data = $('#edit_id_rak').select2("val");
+            @this.set('id_rak', data);
+        });
+    });
+</script>
 
 @endpush

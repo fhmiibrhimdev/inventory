@@ -11,21 +11,24 @@
                         <div class="form-group mt-3">
                             <label for="filter_id_barang">Nama Item</label>
                             <div wire:ignore>
-                                <select name="filter_id_barang" id="filter_id_barang" wire:model='filter_id_barang' class="form-control tw-rounded-lg">
+                                <select name="filter_id_barang" id="filter_id_barang" wire:model='filter_id_barang'
+                                    class="form-control tw-rounded-lg">
                                     <option value="0">-- Pilih Barang --</option>
                                     @foreach ($barangs as $barang)
-                                        <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
+                                    <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="filter_dari_tanggal">Dari Tanggal</label>
-                            <input type="date" name="filter_dari_tanggal" id="filter_dari_tanggal" wire:model='filter_dari_tanggal' class="form-control tw-rounded-lg">
+                            <input type="datetime-local" name="filter_dari_tanggal" id="filter_dari_tanggal"
+                                wire:model='filter_dari_tanggal' class="form-control tw-rounded-lg">
                         </div>
                         <div class="form-group">
                             <label for="filter_sampai_tanggal">s/d Tanggal</label>
-                            <input type="date" name="filter_sampai_tanggal" id="filter_sampai_tanggal" wire:model='filter_sampai_tanggal' class="form-control tw-rounded-lg">
+                            <input type="datetime-local" name="filter_sampai_tanggal" id="filter_sampai_tanggal"
+                                wire:model='filter_sampai_tanggal' class="form-control tw-rounded-lg">
                         </div>
                     </div>
                 </div>
@@ -65,70 +68,77 @@
                                         <th colspan="2" class="p-3">MUTASI</th>
                                         <th rowspan="2" class="p-3">STOCK AKHIR</th>
                                     </tr>
-                                    <tr class="tw-text-xs text-center text-uppercase">
+                                    <tr class="tw-border-b tw-text-xs text-center text-uppercase">
                                         <th class="p-3">IN</th>
                                         <th class="p-3">OUT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if ($data == '')
+                                    <tr id="table-row" class="text-center">
+                                        <td class="p-3" colspan="6">
+                                            No data available in table
+                                        </td>
+                                    </tr>
+                                    @else
                                     @php
-                                        $amountIn = 0;
-                                        $amountOut = 0;
-                                        $amountBalance = 0;
-                                        $amountBalanceLast = 0;
+                                    $amountIn = 0;
+                                    $amountOut = 0;
+                                    $amountBalance = 0;
+                                    $amountBalanceLast = 0;
                                     @endphp
                                     @forelse ($data as $row)
-                                    <tr id="table-row"
+                                    <tr
                                         class="tw-bg-white tw-border tw-uppercase tw-border-gray-200 hover:tw-bg-gray-50 text-center">
                                         <td class="p-3">{{ $row->tanggal }}</td>
                                         <td class="p-3">{{ $row->keterangan }}</td>
                                         <td class="p-3">
                                             @if ($row->status == 'Balance')
-                                                @php
-                                                    $amountBalance += $row->qty;
-                                                @endphp
-                                                {{ $row->qty }}
+                                            @php
+                                            $amountBalance += $row->qty;
+                                            @endphp
+                                            {{ $row->qty }}
                                             @else
-                                                -
+                                            -
                                             @endif
                                         </td>
                                         <td class="p-3">
                                             @if ($row->status == 'In')
-                                                @php
-                                                    $amountIn += $row->qty;
-                                                @endphp
-                                                {{ $row->qty }}
+                                            @php
+                                            $amountIn += $row->qty;
+                                            @endphp
+                                            {{ $row->qty }}
                                             @else
-                                                -
+                                            -
                                             @endif
                                         </td>
                                         <td class="p-3">
                                             @if ($row->status == 'Out')
-                                                @php
-                                                    $amountOut += $row->qty;
-                                                @endphp
-                                                {{ $row->qty }}
+                                            @php
+                                            $amountOut += $row->qty;
+                                            @endphp
+                                            {{ $row->qty }}
                                             @else
-                                                -
+                                            -
                                             @endif
                                         </td>
                                         <td class="p-3">
                                             @php
-                                                $amountBalanceLast = last((array)$row->balancing);
+                                            $amountBalanceLast = last((array)$row->balancing);
                                             @endphp
                                             {{ $row->balancing }}
                                         </td>
-                                    </tr> 
+                                    </tr>
                                     @empty
                                     <tr class="text-center">
                                         <td class="p-3" colspan="7">
                                             No data available in table
                                         </td>
-                                    </tr>    
+                                    </tr>
                                     @endforelse
                                 </tbody>
                                 <thead>
-                                    <tr class="tw-text-center"> 
+                                    <tr class="tw-text-center">
                                         <th class="p-3 tw-text-center" colspan="2">TOTAL</th>
                                         <th class="p-3">{{ $amountBalance }}</th>
                                         <th class="p-3">{{ $amountIn }}</th>
@@ -136,10 +146,16 @@
                                         <th class="p-3">{{ $amountBalanceLast }}</th>
                                     </tr>
                                 </thead>
+                                @endif
+
                             </table>
                         </div>
                         <div class="table-responsive p-3">
+                            @if ($data == '')
+
+                            @else
                             {{ $data->links() }}
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -149,13 +165,13 @@
 </div>
 
 @push('scripts')
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
             $('#filter_id_barang').select2();
             $('#filter_id_barang').on('change', function (e) {
                 var data = $('#filter_id_barang').select2("val");
                 @this.set('filter_id_barang', data);
             });
         });
-    </script>
+</script>
 @endpush

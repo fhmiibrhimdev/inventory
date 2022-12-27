@@ -11,27 +11,48 @@
                         <div class="form-group mt-3">
                             <label for="filter_id_barang">Nama Barang</label>
                             <div wire:ignore>
-                                <select name="filter_id_barang" id="filter_id_barang" wire:model='filter_id_barang' class="form-control tw-rounded-lg">
+                                <select name="filter_id_barang" id="filter_id_barang" wire:model='filter_id_barang'
+                                    class="form-control tw-rounded-lg">
                                     <option value="0">-- Pilih Barang --</option>
                                     @foreach ($barangs as $barang)
-                                        <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
+                                    <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="filter_dari_tanggal">Dari Tanggal</label>
-                            <input type="date" name="filter_dari_tanggal" id="filter_dari_tanggal" wire:model='filter_dari_tanggal' class="form-control tw-rounded-lg">
+                            <input type="datetime-local" name="filter_dari_tanggal" id="filter_dari_tanggal"
+                                wire:model='filter_dari_tanggal' class="form-control tw-rounded-lg">
                         </div>
                         <div class="form-group">
                             <label for="filter_sampai_tanggal">s/d Tanggal</label>
-                            <input type="date" name="filter_sampai_tanggal" id="filter_sampai_tanggal" wire:model='filter_sampai_tanggal' class="form-control tw-rounded-lg">
+                            <input type="datetime-local" name="filter_sampai_tanggal" id="filter_sampai_tanggal"
+                                wire:model='filter_sampai_tanggal' class="form-control tw-rounded-lg">
+                        </div>
+                        <div class="tw-grid tw-grid-cols-2 tw-gap tw-gap-3">
+                            <div>
+                                <a href="{{ route('laporan-excel.barang-keluar', ["id_barang"=> $this->filter_id_barang,
+                                    "dari_tanggal" => $this->filter_dari_tanggal, "sampai_tanggal" =>
+                                    $this->filter_sampai_tanggal]) }}" class="btn btn-outline-success tw-w-full"
+                                    target="_BLANK">
+                                    <i class="far fa-file-excel"></i> EXCEL
+                                </a>
+                            </div>
+                            <div>
+                                <a href="{{ route('laporan-pdf.barang-keluar', ["id_barang"=> $this->filter_id_barang,
+                                    "dari_tanggal" => $this->filter_dari_tanggal, "sampai_tanggal" =>
+                                    $this->filter_sampai_tanggal]) }}" class="btn btn-outline-danger tw-w-full"
+                                    target="_BLANK">
+                                    <i class="far fa-file-pdf"></i> PDF
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-9">
-                <div class="card card-primary tw-rounded-md">
+                <div class="card tw-rounded-md">
                     <div class="card-body px-0 tw-shadow-md">
                         <div class="row mb-3 px-4">
                             <div class="col-4 col-lg-2 tw-flex">
@@ -79,17 +100,18 @@
                                                 data-target="#ubahDataModal" wire:click="edit({{ $row->id }})">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button class="btn btn-danger" wire:click.prevent="deleteConfirm({{ $row->id }})">
+                                            <button class="btn btn-danger"
+                                                wire:click.prevent="deleteConfirm({{ $row->id }})">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
-                                    </tr> 
+                                    </tr>
                                     @empty
                                     <tr class="text-center">
                                         <td class="p-3" colspan="5">
                                             No data available in table
                                         </td>
-                                    </tr>    
+                                    </tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -122,13 +144,14 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="tanggal">Tanggal</label>
-                            <input type="datetime-local" wire:model='tanggal' name="tanggal" id="tanggal" class="form-control">
+                            <input type="datetime-local" wire:model='tanggal' name="tanggal" id="tanggal"
+                                class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="id_barang">Nama Barang</label>
                             <select wire:model='id_barang' name="id_barang" id="id_barang" class="form-control">
                                 @foreach ($barangs as $barang)
-                                    <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
+                                <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -138,7 +161,8 @@
                         </div>
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
-                            <textarea wire:model='keterangan' name="keterangan" id="keterangan" style="height: 100px;" class="form-control"></textarea>
+                            <textarea wire:model='keterangan' name="keterangan" id="keterangan" style="height: 100px;"
+                                class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -151,8 +175,8 @@
         </div>
     </div>
 
-    <div class="modal fade" wire:ignore.self id="ubahDataModal" aria-labelledby="ubahDataModalLabel"
-        aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal fade" wire:ignore.self id="ubahDataModal" aria-labelledby="ubahDataModalLabel" aria-hidden="true"
+        data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -167,13 +191,14 @@
                         <input type="hidden" wire:model='dataId'>
                         <div class="form-group">
                             <label for="tanggal">Tanggal</label>
-                            <input type="datetime-local" wire:model='tanggal' name="tanggal" id="tanggal" class="form-control">
+                            <input type="datetime-local" wire:model='tanggal' name="tanggal" id="tanggal"
+                                class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="id_barang">Nama Barang</label>
                             <select wire:model='id_barang' name="id_barang" id="id_barang" class="form-control">
                                 @foreach ($barangs as $barang)
-                                    <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
+                                <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -181,19 +206,22 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="qty_barang">Qty Barang</label>
-                                    <input type="text" id="qty_barang" class="form-control text-center tw-rounded-lg" value="{{ $qty_barang }}" readonly>
+                                    <input type="text" id="qty_barang" class="form-control text-center tw-rounded-lg"
+                                        value="{{ $qty_barang }}" readonly>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="qty">Qty</label>
-                                    <input type="text" wire:model='qty' name="qty" id="qty" class="form-control text-center tw-rounded-lg">
+                                    <input type="text" wire:model='qty' name="qty" id="qty"
+                                        class="form-control text-center tw-rounded-lg">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
-                            <textarea wire:model='keterangan' name="keterangan" id="keterangan" style="height: 100px;" class="form-control"></textarea>
+                            <textarea wire:model='keterangan' name="keterangan" id="keterangan" style="height: 100px;"
+                                class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -210,8 +238,8 @@
 
 @push('scripts')
 
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
             $('#id_barang').select2();
             $('#id_barang').on('change', function (e) {
                 var data = $('#id_barang').select2("val");
@@ -223,6 +251,6 @@
                 @this.set('filter_id_barang', data);
             });
         });
-    </script>
+</script>
 
 @endpush

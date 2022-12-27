@@ -11,21 +11,24 @@
                         <div class="form-group mt-3">
                             <label for="filter_id_barang">Nama Item</label>
                             <div wire:ignore>
-                                <select name="filter_id_barang" id="filter_id_barang" wire:model='filter_id_barang' class="form-control tw-rounded-lg">
+                                <select name="filter_id_barang" id="filter_id_barang" wire:model='filter_id_barang'
+                                    class="form-control tw-rounded-lg">
                                     <option value="0">-- Pilih Barang --</option>
                                     @foreach ($barangs as $barang)
-                                        <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
+                                    <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="filter_dari_tanggal">Dari Tanggal</label>
-                            <input type="date" name="filter_dari_tanggal" id="filter_dari_tanggal" wire:model='filter_dari_tanggal' class="form-control tw-rounded-lg">
+                            <input type="datetime-local" name="filter_dari_tanggal" id="filter_dari_tanggal"
+                                wire:model='filter_dari_tanggal' class="form-control tw-rounded-lg">
                         </div>
                         <div class="form-group">
                             <label for="filter_sampai_tanggal">s/d Tanggal</label>
-                            <input type="date" name="filter_sampai_tanggal" id="filter_sampai_tanggal" wire:model='filter_sampai_tanggal' class="form-control tw-rounded-lg">
+                            <input type="datetime-local" name="filter_sampai_tanggal" id="filter_sampai_tanggal"
+                                wire:model='filter_sampai_tanggal' class="form-control tw-rounded-lg">
                         </div>
                     </div>
                 </div>
@@ -64,7 +67,6 @@
                                         <th class="p-3">Buku</th>
                                         <th class="p-3">Fisik</th>
                                         <th class="p-3">Selisih</th>
-                                        <th class="p-3">Keterangan</th>
                                         <th class="p-3 text-center"></th>
                                     </tr>
                                 </thead>
@@ -77,19 +79,19 @@
                                         <td class="p-3">{{ $row->buku }}</td>
                                         <td class="p-3">{{ $row->fisik }}</td>
                                         <td class="p-3">{{ $row->selisih }}</td>
-                                        <td class="p-3">{{ $row->keterangan }}</td>
                                         <td class="p-3 text-center">
-                                            <button class="btn btn-danger" wire:click.prevent="deleteConfirm({{ $row->id }})">
+                                            <button class="btn btn-danger"
+                                                wire:click.prevent="deleteConfirm({{ $row->id }})">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
-                                    </tr> 
+                                    </tr>
                                     @empty
                                     <tr class="text-center">
-                                        <td class="p-3" colspan="8">
+                                        <td class="p-3" colspan="6">
                                             No data available in table
                                         </td>
-                                    </tr>    
+                                    </tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -122,14 +124,16 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="tanggal">Tanggal</label>
-                            <input type="datetime-local" wire:model='tanggal' name="tanggal" id="tanggal" class="form-control tw-rounded-lg">
+                            <input type="datetime-local" wire:model='tanggal' name="tanggal" id="tanggal"
+                                class="form-control tw-rounded-lg">
                         </div>
                         <div class="form-group">
                             <label for="id_barang">Nama Item</label>
                             <div wire:ignore>
-                                <select wire:model='id_barang' name="id_barang" id="id_barang" class="form-control tw-rounded-lg">
+                                <select wire:model='id_barang' name="id_barang" id="id_barang"
+                                    class="form-control tw-rounded-lg">
                                     @foreach ($barangs as $barang)
-                                        <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
+                                    <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -138,25 +142,29 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="buku">Buku</label>
-                                    <input type="text" wire:model='buku' name="buku" id="buku" class="form-control tw-rounded-lg" readonly>
+                                    <input type="text" wire:model='buku' name="buku" id="buku"
+                                        class="form-control tw-rounded-lg" readonly>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="fisik">Fisik</label>
-                                    <input type="text" wire:model='fisik' name="fisik" id="fisik" class="form-control tw-rounded-lg">
+                                    <input type="text" wire:model='fisik' name="fisik" id="fisik"
+                                        class="form-control tw-rounded-lg">
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="selisih">Selisih</label>
-                                    <input type="text" value="{{ (int)$this->fisik - (int)$this->buku }}" name="selisih" id="selisih" class="form-control tw-rounded-lg" readonly>
+                                    <input type="text" value="{{ (int)$this->fisik - (int)$this->buku }}" name="selisih"
+                                        id="selisih" class="form-control tw-rounded-lg" readonly>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
-                            <textarea wire:model='keterangan' name="keterangan" id="keterangan" style="height: 100px;" class="form-control tw-rounded-lg"></textarea>
+                            <textarea wire:model='keterangan' name="keterangan" id="keterangan" style="height: 100px;"
+                                class="form-control tw-rounded-lg"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -172,8 +180,8 @@
 
 @push('scripts')
 
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
             $('#id_barang').select2();
             $('#id_barang').on('change', function (e) {
                 var data = $('#id_barang').select2("val");
@@ -189,6 +197,6 @@
                 @this.set('filter_id_barang', data);
             });
         });
-    </script>
+</script>
 
 @endpush
