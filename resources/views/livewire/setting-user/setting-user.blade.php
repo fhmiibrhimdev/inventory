@@ -24,8 +24,8 @@
                                 </select>
                             </div>
                             <div class="col-8 col-lg-4 ml-auto">
-                                <input wire:model="searchTerm" type="search" class="form-control ml-auto"
-                                    placeholder="Search here.." wire:model='searchTerm'>
+                                <input wire:model.debounce.500ms="searchTerm" type="search" class="form-control ml-auto"
+                                    placeholder="Search here..">
                             </div>
                         </div>
                         <div class="table-responsive">

@@ -2,24 +2,28 @@
 
 namespace App\Http\Livewire\Master;
 
-use Livewire\Component;
-use Livewire\WithPagination;
-use App\Models\DataBarang as ModelsDataBarang;
-use App\Models\Jenis;
-use App\Models\Kategori;
-use App\Models\Merek;
 use App\Models\Rak;
+use App\Models\Jenis;
+use App\Models\Merek;
 use App\Models\Satuan;
+use Livewire\Component;
+use App\Models\Kategori;
+use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
+use App\Models\DataBarang as ModelsDataBarang;
+use Livewire\WithFileUploads;
 
 class DataBarang extends Component
 {
     use WithPagination;
+    use WithFileUploads;
     protected $listeners = [
         'deleteConfirmed' => 'delete',
     ];
     public $kode_item, $nama_item, $keterangan;
-    public $id_jenis, $id_merek, $id_satuan, $id_kategori, $id_rak;
+    public $id_jenis, $id_merek, $id_satuan, $id_kategori, $id_rak, $gambar;
     public $edit_id_jenis, $edit_id_merek, $edit_id_satuan, $edit_id_kategori, $edit_id_rak;
+    public $dataId;
     public $searchTerm, $lengthData;
     public $updateMode = false;
     public $idRemoved = null;
@@ -38,7 +42,12 @@ class DataBarang extends Component
         $kategoris = Kategori::select('id', 'nama_kategori')->get();
         $raks = Rak::select('id', 'nama_rak')->get();
 
-        $data = ModelsDataBarang::select('data_barang.id', 'data_barang.kode_item', 'data_barang.nama_item', 'data_barang.keterangan', 'data_barang.stock', 'jenis.nama_jenis', 'merek.nama_merek', 'satuan.nama_satuan', 'kategori.kode_kategori', 'rak.nama_rak')
+        $tersedia = ModelsDataBarang::select(DB::raw('COUNT(id) AS tersedia'))->first()->tersedia;
+        $stok_sedikit = ModelsDataBarang::select(DB::raw('COUNT(id) AS stok_sedikit'))->where('stock', '<=', '5')->where('stock', '>=', '1')->first()->stok_sedikit;
+        $stok_tersedia = ModelsDataBarang::select(DB::raw('COUNT(id) AS stok_tersedia'))->where('stock', '>', '5')->first()->stok_tersedia;
+        $stok_habis = ModelsDataBarang::select(DB::raw('COUNT(id) AS stok_habis'))->where('stock', '0')->first()->stok_habis;
+
+        $data = ModelsDataBarang::select('data_barang.id', 'data_barang.gambar', 'data_barang.kode_item', 'data_barang.nama_item', 'data_barang.keterangan', 'data_barang.stock', 'jenis.nama_jenis', 'merek.nama_merek', 'satuan.nama_satuan', 'kategori.kode_kategori', 'rak.nama_rak')
             ->join('jenis', 'jenis.id', 'data_barang.id_jenis')
             ->join('merek', 'merek.id', 'data_barang.id_merek')
             ->join('satuan', 'satuan.id', 'data_barang.id_satuan')
@@ -58,7 +67,7 @@ class DataBarang extends Component
             ->orderBy('id', 'DESC')
             ->paginate($lengthData);
 
-        return view('livewire.master.data-barang', compact('data', 'jenis', 'mereks', 'satuans', 'kategoris', 'raks'))
+        return view('livewire.master.data-barang', compact('data', 'jenis', 'mereks', 'satuans', 'kategoris', 'raks', 'tersedia', 'stok_sedikit', 'stok_tersedia', 'stok_habis'))
             ->extends('layouts.apps', ['title' => 'Master Data - Barang']);;
     }
 
@@ -100,13 +109,26 @@ class DataBarang extends Component
         $this->validate([
             'kode_item'  => 'required',
             'nama_item'  => 'required',
+            'gambar'     => 'nullable|mimes:png,jpg,jpeg,gif,svg|max:4096',
         ]);
     }
 
     public function store()
     {
         $this->validateInput();
+
+        switch ($this->gambar) {
+            case '':
+                $imagePath = '';
+                break;
+            
+            default:
+                $imagePath = $this->gambar->store('images', 'public');
+                break;
+        }
+
         ModelsDataBarang::create([
+            'gambar'        => $imagePath,
             'kode_item'     => $this->kode_item,
             'nama_item'     => strtoupper($this->nama_item),
             'id_jenis'      => $this->id_jenis,

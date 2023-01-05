@@ -5,6 +5,60 @@
 
     <div class="section-body">
         <div class="row">
+            <div class="col-lg-3">
+                <div class="card tw-shadow-md tw-shadow-gray-300 tw-rounded-lg">
+                    <div class="card-body">
+                        <div class="tw-flex">
+                            <i class="far fa-inventory tw-text-5xl text-info"></i>
+                            <div class="ml-3">
+                                <span class="tw-font-bold tw-text-black">{{ $tersedia }} Barang</span>
+                                <p>Tersedia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card tw-shadow-md tw-shadow-gray-300 tw-rounded-lg">
+                    <div class="card-body">
+                        <div class="tw-flex">
+                            <i class="far fa-truck-loading tw-text-5xl text-danger"></i>
+                            <div class="ml-3">
+                                <span class="tw-font-bold tw-text-black">{{ $stok_habis }} Barang</span>
+                                <p>Stok Habis</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card tw-shadow-md tw-shadow-gray-300 tw-rounded-lg">
+                    <div class="card-body">
+                        <div class="tw-flex">
+                            <i class="far fa-box-full tw-text-5xl text-success"></i>
+                            <div class="ml-3">
+                                <span class="tw-font-bold tw-text-black">{{ $stok_tersedia }} Barang</span>
+                                <p>Stok Tersedia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card tw-shadow-md tw-shadow-gray-300 tw-rounded-lg">
+                    <div class="card-body">
+                        <div class="tw-flex">
+                            <i class="far fa-hand-holding-box tw-text-5xl text-warning"></i>
+                            <div class="ml-3">
+                                <span class="tw-font-bold tw-text-black">{{ $stok_sedikit }} Barang</span>
+                                <p>Stok Sedikit</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-12">
                 <div class="card tw-shadow-md tw-shadow-gray-300 tw-rounded-lg">
                     <div class="card-body px-0">
@@ -25,13 +79,14 @@
                             </div>
                             <div class="col-8 col-lg-4 ml-auto tw-flex">
                                 <span class="mt-2 text-dark mr-1 tw-hidden lg:tw-block">Search:</span>
-                                <input wire:model="searchTerm" type="search" class="form-control tw-rounded-lg ml-auto" placeholder="Search here.." wire:model='searchTerm'>
+                                <input type="search" class="form-control tw-rounded-lg ml-auto" placeholder="Search here.." wire:model.debounce.500ms='searchTerm'>
                             </div>
                         </div>
                         <div class="table-responsive">
                             <table class="tw-table-fixed tw-w-full tw-text-black tw-text-md mt-3 tw-border-collapse tw-border">
                                 <thead>
                                     <tr class="tw-border-b tw-text-xs text-center text-uppercase">
+                                        <th class="p-3">Gambar</th>
                                         <th class="p-3">KD BRG</th>
                                         <th class="p-3">NM BRG</th>
                                         <th class="p-3">STOCK</th>
@@ -46,6 +101,7 @@
                                 <tbody>
                                     @forelse ($data as $row)
                                     <tr class="tw-bg-white tw-border tw-border-gray-200 hover:tw-bg-gray-50 tw-text-center">
+                                        <td class="p-3"><img class="tw-rounded-lg" src="{{ asset('storage/'.$row->gambar) }}" width="100%" alt=""></td>
                                         <td class="p-3">{{ $row->kode_item }}</td>
                                         <td class="p-3">{{ $row->nama_item }}</td>
                                         <td class="p-3">{{ $row->stock }}</td>
@@ -87,7 +143,7 @@
 
     {{-- Insert Data Modal --}}
     <div class="modal fade" wire:ignore.self id="tambahDataModal" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="tambahDataModalLabel">Tambah Data</h5>
@@ -99,93 +155,109 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="kode_item">Kode Barang</label>
-                                    <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="kode_item" id="kode_item" wire:model='kode_item'>
-                                    @error('kode_item') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
+                                @if ($gambar == '')
+                                    <img src="https://static.vecteezy.com/system/resources/previews/004/141/669/original/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg" class="tw-rounded-lg tw-object-cover tw-h-full tw-w-full mb-3">
+                                @else
+                                    <img src="{{ $gambar->temporaryUrl() }}" class="tw-rounded-lg tw-object-cover tw-h-full tw-w-full mb-3">
+                                @endif
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="nama_item">Nama Barang</label>
-                                    <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="nama_item" id="nama_item" wire:model='nama_item'>
-                                    @error('nama_item') <span class="text-danger">{{ $message }}</span> @enderror
+                                <div class="custom-file form-group">
+                                    <input type="file" wire:model='gambar' class="custom-file-input tw-rounded-lg" id="gambar">
+                                    <label class="custom-file-label" for="gambar">Upload foto barang</label>
+                                    @error('gambar') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label for="id_jenis">Nama Jenis</label>
-                                    <div wire:ignore>
-                                        <select class="form-control tw-rounded-lg" name="id_jenis" id="id_jenis" wire:model='id_jenis'>
-                                            @foreach ($jenis as $jeniss)
-                                            <option value="{{ $jeniss->id }}">{{ $jeniss->nama_jenis }}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="kode_item">Kode Barang</label>
+                                            <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="kode_item" id="kode_item" wire:model='kode_item'>
+                                            @error('kode_item') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
-                                    @error('id_jenis') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label for="id_merek">Nama Merek</label>
-                                    <div wire:ignore>
-                                        <select class="form-control tw-rounded-lg" name="id_merek" id="id_merek" wire:model='id_merek'>
-                                            @foreach ($mereks as $merek)
-                                            <option value="{{ $merek->id }}">{{ $merek->nama_merek }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="nama_item">Nama Barang</label>
+                                            <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="nama_item" id="nama_item" wire:model='nama_item'>
+                                            @error('nama_item') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
-                                    @error('id_merek') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label for="id_satuan">Nama Satuan</label>
-                                    <div wire:ignore>
-                                        <select class="form-control tw-rounded-lg" name="id_satuan" id="id_satuan" wire:model='id_satuan'>
-                                            @foreach ($satuans as $satuan)
-                                            <option value="{{ $satuan->id }}">{{ $satuan->nama_satuan }}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="id_jenis">Nama Jenis</label>
+                                            <div wire:ignore>
+                                                <select class="form-control tw-rounded-lg" name="id_jenis" id="id_jenis" wire:model='id_jenis'>
+                                                    @foreach ($jenis as $jeniss)
+                                                    <option value="{{ $jeniss->id }}">{{ $jeniss->nama_jenis }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('id_jenis') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
-                                    @error('id_satuan') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="id_kategori">Nama Kategori</label>
-                                    <div wire:ignore>
-                                        <select class="form-control tw-rounded-lg" name="id_kategori" id="id_kategori" wire:model='id_kategori'>
-                                            @foreach ($kategoris as $kategori)
-                                            <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="id_merek">Nama Merek</label>
+                                            <div wire:ignore>
+                                                <select class="form-control tw-rounded-lg" name="id_merek" id="id_merek" wire:model='id_merek'>
+                                                    @foreach ($mereks as $merek)
+                                                    <option value="{{ $merek->id }}">{{ $merek->nama_merek }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('id_merek') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
-                                    @error('id_kategori') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="id_rak">Lokasi Rak</label>
-                                    <div wire:ignore>
-                                        <select class="form-control tw-rounded-lg" name="id_rak" id="id_rak" wire:model='id_rak'>
-                                            @foreach ($raks as $rak)
-                                            <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="id_satuan">Nama Satuan</label>
+                                            <div wire:ignore>
+                                                <select class="form-control tw-rounded-lg" name="id_satuan" id="id_satuan" wire:model='id_satuan'>
+                                                    @foreach ($satuans as $satuan)
+                                                    <option value="{{ $satuan->id }}">{{ $satuan->nama_satuan }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('id_satuan') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
-                                    @error('id_rak') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="id_kategori">Nama Kategori</label>
+                                            <div wire:ignore>
+                                                <select class="form-control tw-rounded-lg" name="id_kategori" id="id_kategori" wire:model='id_kategori'>
+                                                    @foreach ($kategoris as $kategori)
+                                                    <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('id_kategori') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="id_rak">Lokasi Rak</label>
+                                            <div wire:ignore>
+                                                <select class="form-control tw-rounded-lg" name="id_rak" id="id_rak" wire:model='id_rak'>
+                                                    @foreach ($raks as $rak)
+                                                    <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('id_rak') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="keterangan">Keterangan</label>
+                                    <textarea class="form-control tw-rounded-lg" name="keterangan" id="keterangan" wire:model='keterangan' style="height: 100px"></textarea>
+                                    @error('keterangan') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="keterangan">Keterangan</label>
-                            <textarea class="form-control tw-rounded-lg" name="keterangan" id="keterangan" wire:model='keterangan' style="height: 100px"></textarea>
-                            @error('keterangan') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -211,6 +283,15 @@
                 <form>
                     <div class="modal-body">
                         <input type="hidden" wire:model='dataId'>
+                        @if ($gambar)
+                            Photo Preview:
+                            <img src="{{ $gambar->temporaryUrl() }}">
+                        @endif
+                        <div class="custom-file form-group">
+                            <input type="file" wire:model='gambar' class="custom-file-input tw-rounded-lg" id="gambar">
+                            <label class="custom-file-label" for="gambar">Upload foto barang</label>
+                            @error('gambar') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">

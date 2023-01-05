@@ -44,8 +44,8 @@
                             </div>
                             <div class="col-8 col-lg-4 ml-auto tw-flex">
                                 <span class="mt-2 text-dark mr-1 tw-hidden lg:tw-block">Search:</span>
-                                <input wire:model="searchTerm" type="search" class="form-control tw-rounded-lg ml-auto"
-                                    placeholder="Search here.." wire:model='searchTerm'>
+                                <input type="search" class="form-control tw-rounded-lg ml-auto"
+                                    placeholder="Search here.." wire:model.debounce.500ms='searchTerm'>
                             </div>
                         </div>
                         <div class="table-responsive">

@@ -15,6 +15,7 @@ class CreateDataBarangsTable extends Migration
     {
         Schema::create('data_barang', function (Blueprint $table) {
             $table->id();
+            $table->text('gambar');
             $table->text('kode_item');
             $table->text('nama_item');
             $table->text('id_jenis');
