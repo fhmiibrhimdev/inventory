@@ -17,6 +17,7 @@ class SaldoAwalItem extends Component
 
     public function render()
     {
+        $a = 0;
         if( $this->id_user == 'ALL' )
         {
             $data = Persediaan::select('persediaan.id', 'persediaan.tanggal', 'persediaan.keterangan', 'persediaan.qty', 'data_barang.nama_item' ,'users.name')
@@ -25,6 +26,7 @@ class SaldoAwalItem extends Component
                         ->where('status', 'Balance')
                         ->whereBetween('tanggal', [$this->dari_tanggal, $this->sampai_tanggal])
                         ->get();
+
         } else
         {
             $data = Persediaan::select('persediaan.id', 'persediaan.tanggal', 'persediaan.keterangan', 'persediaan.qty', 'data_barang.nama_item' ,'users.name')
@@ -36,7 +38,6 @@ class SaldoAwalItem extends Component
                         ->get();
         }
         
-
         $users = User::select('id', 'name')->get();
 
         return view('livewire.laporan.saldo-awal-item', compact('data', 'users'))

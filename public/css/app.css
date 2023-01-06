@@ -971,6 +971,30 @@ select {
   --tw-text-opacity: 1 !important;
   color: rgb(17 24 39 / var(--tw-text-opacity)) !important;
 }
+.tw-text-black {
+  --tw-text-opacity: 1 !important;
+  color: rgb(0 0 0 / var(--tw-text-opacity)) !important;
+}
+.tw-text-gray-900 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(17 24 39 / var(--tw-text-opacity)) !important;
+}
+.tw-text-black {
+  --tw-text-opacity: 1 !important;
+  color: rgb(0 0 0 / var(--tw-text-opacity)) !important;
+}
+.tw-text-gray-900 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(17 24 39 / var(--tw-text-opacity)) !important;
+}
+.tw-text-black {
+  --tw-text-opacity: 1 !important;
+  color: rgb(0 0 0 / var(--tw-text-opacity)) !important;
+}
+.tw-text-gray-900 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(17 24 39 / var(--tw-text-opacity)) !important;
+}
 .tw-shadow-md {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color) !important;
@@ -1006,6 +1030,41 @@ select {
 .tw-shadow-gray-300 {
   --tw-shadow-color: #d1d5db !important;
   --tw-shadow: var(--tw-shadow-colored) !important;
+}
+.tw-shadow-gray-200 {
+  --tw-shadow-color: #e5e7eb !important;
+  --tw-shadow: var(--tw-shadow-colored) !important;
+}
+.tw-shadow-gray-300 {
+  --tw-shadow-color: #d1d5db !important;
+  --tw-shadow: var(--tw-shadow-colored) !important;
+}
+.tw-shadow-gray-200 {
+  --tw-shadow-color: #e5e7eb !important;
+  --tw-shadow: var(--tw-shadow-colored) !important;
+}
+.tw-shadow-gray-300 {
+  --tw-shadow-color: #d1d5db !important;
+  --tw-shadow: var(--tw-shadow-colored) !important;
+}
+.tw-shadow-gray-200 {
+  --tw-shadow-color: #e5e7eb !important;
+  --tw-shadow: var(--tw-shadow-colored) !important;
+}
+.tw-shadow-gray-300 {
+  --tw-shadow-color: #d1d5db !important;
+  --tw-shadow: var(--tw-shadow-colored) !important;
+}
+.tw-outline-none {
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+}
+.\!tw-outline-none {
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+}
+.tw-outline-gray-300 {
+  outline-color: #d1d5db !important;
 }
 .tw-ring-gray-300 {
   --tw-ring-opacity: 1 !important;

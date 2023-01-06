@@ -27,8 +27,8 @@
                         </div>
 
                         <div class="tw-grid tw-grid-cols-2 tw-mt-5 tw-gap-3">
-                            <button class="btn btn-outline-success form-control"><i class="fas fa-file-excel mr-2"></i>Excel</button>
-                            <button class="btn btn-outline-danger form-control"><i class="fas fa-file-pdf mr-2"></i>PDF</button>
+                            <button class="btn btn-outline-success"><i class="fas fa-file-excel mr-2"></i>Excel</button>
+                            <button class="btn btn-outline-danger"><i class="fas fa-file-pdf mr-2"></i>PDF</button>
                         </div>
                     </div>
                 </div>
