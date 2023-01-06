@@ -11,7 +11,7 @@
                         <div class="form-group">
                             <label for="id_user">Nama User</label>
                             <select wire:model="id_user" id="id_user" class="form-control tw-rounded-lg">
-                                <option value="ALL">-- Select Option --</option>
+                                <option value="0">-- Select Option --</option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <label for="id_barang">Nama Barang</label>
                             <select wire:model="id_barang" id="id_barang" class="form-control tw-rounded-lg">
-                                <option value="ALL">-- Select Option --</option>
+                                <option value="0">-- Select Option --</option>
                                 @foreach ($barangs as $barang)
                                     <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
                                 @endforeach
@@ -34,10 +34,23 @@
                             <label for="sampai_tanggal">Sampai Tanggal</label>
                             <input type="datetime-local" wire:model='sampai_tanggal' id="sampai_tanggal" class="form-control tw-rounded-lg">
                         </div>
-
-                        <div class="tw-grid tw-grid-cols-2 tw-mt-5 tw-gap-3">
-                            <button class="btn btn-outline-success"><i class="fas fa-file-excel mr-2"></i>Excel</button>
-                            <button class="btn btn-outline-danger"><i class="fas fa-file-pdf mr-2"></i>PDF</button>
+                        <div class="tw-grid tw-grid-cols-2 tw-gap tw-gap-3">
+                            <div>
+                                <a href="{{ route('laporan-excel.saldo-awal', ["id_barang"=> $this->id_barang,
+                                    "dari_tanggal" => $this->dari_tanggal, "sampai_tanggal" =>
+                                    $this->sampai_tanggal]) }}" class="btn btn-outline-success tw-w-full"
+                                    target="_BLANK">
+                                    <i class="far fa-file-excel"></i> EXCEL
+                                </a>
+                            </div>
+                            <div>
+                                <a href="{{ route('laporan-pdf.saldo-awal', ["id_barang"=> $this->id_barang,
+                                    "dari_tanggal" => $this->dari_tanggal, "sampai_tanggal" =>
+                                    $this->sampai_tanggal]) }}" class="btn btn-outline-danger tw-w-full"
+                                    target="_BLANK">
+                                    <i class="far fa-file-pdf"></i> PDF
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

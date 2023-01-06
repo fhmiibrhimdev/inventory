@@ -66,8 +66,8 @@ class SaldoAwalItem extends Component
 
     public function mount()
     {
-        $this->id_user          = 'ALL';
-        $this->id_barang        = 'ALL';
+        $this->id_user          = '0';
+        $this->id_barang        = '0';
         $this->dari_tanggal     = Carbon::now()->startOfMonth()->toDateTimeLocalString();;
         $this->sampai_tanggal   = Carbon::now()->endOfMonth()->toDateTimeLocalString();;
     }
