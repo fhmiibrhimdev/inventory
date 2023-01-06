@@ -5,36 +5,24 @@
 
     <div class="section-body">
         <div class="row">
-            <div class="col-lg-3">
-                <div class="card tw-shadow-md tw-shadow-gray-300 tw-rounded-lg">
-                    <div class="card-body">
-                        <p></p>
-                        <span class="tw-font-bold tw-text-black">1</span>
+            <div class="col-12">
+                <div class="activities">
+                    @foreach ($data as $row)
+                    <div class="activity">
+                        <div class="activity-icon bg-primary text-white shadow-primary">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                        <div class="activity-detail">
+                            <div class="mb-2">
+                                <span class="text-job text-primary">{{ $row->tanggal }}</span>
+                                <span class="bullet"></span>
+                                <a class="text-job" href="#">{{ $row->name }}</a>
+                            </div>
+                            <p>Menambahkan saldo awal barang: <b class="tw-text-gray-900">{{ $row->nama_item }}</b> sebanyak <b class="tw-text-gray-900">{{ $row->qty }}</b> pcs</p>
+                            <p>Keterangan: <br /><b class="tw-text-gray-900">{{ $row->keterangan }}</b></p>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card tw-shadow-md tw-shadow-gray-300 tw-rounded-lg">
-                    <div class="card-body">
-                        <p></p>
-                        <span class="tw-font-bold tw-text-black">1</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card tw-shadow-md tw-shadow-gray-300 tw-rounded-lg">
-                    <div class="card-body">
-                        <p></p>
-                        <span class="tw-font-bold tw-text-black">1</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card tw-shadow-md tw-shadow-gray-300 tw-rounded-lg">
-                    <div class="card-body">
-                        <p></p>
-                        <span class="tw-font-bold tw-text-black">1</span>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -12,7 +12,13 @@ class SaldoAwalItem extends Component
 {
     public function render()
     {
-        return view('livewire.laporan.saldo-awal-item')
+        $data = Persediaan::select('persediaan.id', 'persediaan.tanggal', 'persediaan.keterangan', 'persediaan.qty', 'data_barang.nama_item' ,'users.name')
+                    ->join('data_barang', 'data_barang.id', 'persediaan.id_barang')
+                    ->join('users', 'users.id', 'persediaan.id_user')
+                    ->where('status', 'Balance')
+                    ->get();
+
+        return view('livewire.laporan.saldo-awal-item', compact('data'))
             ->extends('layouts.apps', ['title' => 'Laporan Inventory - Saldo Awal Barang']);
     }
 
