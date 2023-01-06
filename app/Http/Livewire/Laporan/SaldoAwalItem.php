@@ -13,7 +13,7 @@ class SaldoAwalItem extends Component
     public function render()
     {
         return view('livewire.laporan.saldo-awal-item')
-            ->extends('layouts.laporan', ['title' => 'Laporan Inventory - Saldo Awal Barang']);
+            ->extends('layouts.apps', ['title' => 'Laporan Inventory - Saldo Awal Barang']);
     }
 
     public function exportExcel($id_barang, $dari_tanggal, $sampai_tanggal)

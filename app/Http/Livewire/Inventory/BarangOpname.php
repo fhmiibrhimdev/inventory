@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\DataBarang;
 use App\Models\Persediaan;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class BarangOpname extends Component
 {
@@ -15,7 +16,7 @@ class BarangOpname extends Component
         'deleteConfirmed' => 'delete',
     ];
     public $tanggal, $id_barang, $qty, $keterangan, $status, $buku, $fisik, $selisih;
-    public $filter_id_barang;
+    public $filter_id_barang, $filter_dari_tanggal, $filter_sampai_tanggal;
     public $searchTerm, $lengthData;
     public $updateMode = false;
     public $idRemoved = null;
@@ -150,6 +151,7 @@ class BarangOpname extends Component
         }
 
         Persediaan::create([
+            'id_user'       => Auth::user()->id,
             'tanggal'       => $this->tanggal,
             'id_barang'     => $this->id_barang,
             'qty'           => abs($selisih),

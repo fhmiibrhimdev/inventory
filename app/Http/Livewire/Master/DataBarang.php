@@ -9,9 +9,10 @@ use App\Models\Satuan;
 use Livewire\Component;
 use App\Models\Kategori;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\DB;
-use App\Models\DataBarang as ModelsDataBarang;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\DataBarang as ModelsDataBarang;
 
 class DataBarang extends Component
 {
@@ -21,7 +22,7 @@ class DataBarang extends Component
         'deleteConfirmed' => 'delete',
     ];
     public $kode_item, $nama_item, $keterangan;
-    public $id_jenis, $id_merek, $id_satuan, $id_kategori, $id_rak, $gambar;
+    public $id_jenis, $id_merek, $id_satuan, $id_kategori, $id_rak, $gambar, $gambarLama;
     public $edit_id_jenis, $edit_id_merek, $edit_id_satuan, $edit_id_kategori, $edit_id_rak;
     public $dataId;
     public $searchTerm, $lengthData;
@@ -96,6 +97,7 @@ class DataBarang extends Component
     private function resetInputFields()
     {
         $this->nama_item = '';
+        $this->gambar = '';
     }
 
     public function cancel()
@@ -128,6 +130,7 @@ class DataBarang extends Component
         }
 
         ModelsDataBarang::create([
+            'id_user'       => Auth::user()->id,
             'gambar'        => $imagePath,
             'kode_item'     => $this->kode_item,
             'nama_item'     => strtoupper($this->nama_item),
@@ -144,25 +147,40 @@ class DataBarang extends Component
 
     public function edit($id)
     {
-        $this->updateMode = true;
+        $this->updateMode   = true;
         $data = ModelsDataBarang::where('id', $id)->first();
-        $this->dataId = $id;
-        $this->kode_item = $data->kode_item;
-        $this->nama_item = $data->nama_item;
-        $this->id_jenis = $data->id_jenis;
-        $this->id_merek = $data->id_merek;
-        $this->id_satuan = $data->id_satuan;
-        $this->id_kategori = $data->id_kategori;
-        $this->id_rak = $data->id_rak;
-        $this->keterangan = $data->keterangan;
+        $this->dataId       = $id;
+        $this->gambarLama   = $data->gambar;
+        $this->kode_item    = $data->kode_item;
+        $this->nama_item    = $data->nama_item;
+        $this->id_jenis     = $data->id_jenis;
+        $this->id_merek     = $data->id_merek;
+        $this->id_satuan    = $data->id_satuan;
+        $this->id_kategori  = $data->id_kategori;
+        $this->id_rak       = $data->id_rak;
+        $this->keterangan   = $data->keterangan;
     }
 
     public function update()
     {
         $this->validateInput();
         if ($this->dataId) {
+
+            switch ($this->gambar) {
+                case '':
+                    $imagePath = $this->gambarLama;
+                    break;
+                
+                default:
+                    $imagePath = $this->gambar->store('images', 'public');
+                    unlink('storage/'.$this->gambarLama);
+                    break; 
+            }
+
             $data = ModelsDataBarang::findOrFail($this->dataId);
             $data->update([
+                'id_user'       => Auth::user()->id,
+                'gambar'        => $imagePath,
                 'nama_item'     => strtoupper($this->nama_item),
                 'id_jenis'      => $this->id_jenis,
                 'id_merek'      => $this->id_merek,
@@ -184,6 +202,7 @@ class DataBarang extends Component
     public function delete()
     {
         $data = ModelsDataBarang::findOrFail($this->idRemoved);
+        unlink('storage/'.$data->gambar);
         $data->delete();
     }
 

@@ -36,7 +36,7 @@ class SettingUser extends Component
                     ->paginate($lengthData);
 
         return view('livewire.setting-user.setting-user', compact('data'))
-        ->extends('layouts.apps', ['title' => 'Setting User - Insvira']);
+        ->extends('layouts.apps', ['title' => 'Setting User']);
     }
 
     public function activeConfirm($idAct)

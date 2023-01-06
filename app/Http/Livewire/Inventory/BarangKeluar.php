@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\DataBarang;
 use App\Models\Persediaan;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class BarangKeluar extends Component
 {
@@ -14,7 +15,7 @@ class BarangKeluar extends Component
     protected $listeners = [
         'deleteConfirmed' => 'delete',
     ];
-    public $tanggal, $id_barang, $qty, $keterangan;
+    public $dataId, $tanggal, $id_barang, $qty, $keterangan;
     public $filter_dari_tanggal, $filter_sampai_tanggal, $filter_id_barang;
     public $searchTerm, $lengthData;
     public $updateMode = false;
@@ -143,6 +144,7 @@ class BarangKeluar extends Component
         } else // jika stock pengurangan tidak minus
         { 
             Persediaan::create([
+                'id_user'       => Auth::user()->id,
                 'tanggal'       => $this->tanggal,
                 'id_barang'     => $this->id_barang,
                 'qty'           => $this->qty,
@@ -182,6 +184,7 @@ class BarangKeluar extends Component
             if ($this->dataId) {
                 $data = Persediaan::findOrFail($this->dataId);
                 $data->update([
+                    'id_user'       => Auth::user()->id,
                     'tanggal'       => $this->tanggal,
                     'id_barang'     => $this->id_barang,
                     'qty'           => $this->qty,

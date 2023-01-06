@@ -15,6 +15,7 @@ class CreatePersediaansTable extends Migration
     {
         Schema::create('persediaan', function (Blueprint $table) {
             $table->id();
+            $table->text('id_user');
             $table->text('tanggal');
             $table->text('id_barang');
             $table->text('qty');

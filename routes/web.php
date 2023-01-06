@@ -9,6 +9,7 @@ use App\Http\Livewire\Inventory\SaldoAwalItem;
 use App\Http\Livewire\KartuStock\KartuStock;
 use App\Http\Livewire\Laporan\BarangKeluar as LaporanBarangKeluar;
 use App\Http\Livewire\Laporan\BarangMasuk as LaporanBarangMasuk;
+use App\Http\Livewire\Laporan\BarangOpname as LaporanBarangOpname;
 use App\Http\Livewire\Laporan\SaldoAwalItem as LaporanSaldoAwalItem;
 use App\Http\Livewire\Master\DataBarang;
 use App\Http\Livewire\Master\Jenis;
@@ -61,6 +62,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('admin/barang-opname', BarangOpname::class)->name('admin.barang-opname');
 
     Route::get('admin/kartu-stock', KartuStock::class)->name('admin.kartu-stock');
+    Route::get('admin/laporan/saldo-awal-item', LaporanSaldoAwalItem::class)->name('admin.saldo-awal-item');
+    Route::get('admin/laporan/barang-masuk', LaporanBarangMasuk::class)->name('admin.barang-masuk');
+    Route::get('admin/laporan/barang-keluar', LaporanBarangKeluar::class)->name('admin.barang-keluar');
+    Route::get('admin/laporan/barang-opname', LaporanBarangOpname::class)->name('admin.barang-opname');
     Route::get('setting-user/', SettingUser::class)->name('setting-user.index');
 });
 

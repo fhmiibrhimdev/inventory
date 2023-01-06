@@ -10,7 +10,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="card card-primary">
+                <div class="card tw-shadow-md tw-shadow-gray-300 tw-rounded-lg">
                     <div class="card-body px-0">
                         <div class="row mb-3 px-4">
                             <div class="col-4 col-lg-2">
@@ -24,7 +24,7 @@
                                 </select>
                             </div>
                             <div class="col-8 col-lg-4 ml-auto">
-                                <input wire:model.debounce.500ms="searchTerm" type="search" class="form-control ml-auto"
+                                <input wire:model.debounce.500ms="searchTerm" type="search" class="form-control ml-auto tw-rounded-lg"
                                     placeholder="Search here..">
                             </div>
                         </div>

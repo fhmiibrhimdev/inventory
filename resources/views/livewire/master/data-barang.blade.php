@@ -272,7 +272,7 @@
 
     {{-- Update Data Modal --}}
     <div class="modal fade" wire:ignore.self id="ubahDataModal" aria-labelledby="ubahDataModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="ubahDataModalLabel">Edit Data</h5>
@@ -282,105 +282,113 @@
                 </div>
                 <form>
                     <div class="modal-body">
-                        <input type="hidden" wire:model='dataId'>
-                        @if ($gambar)
-                            Photo Preview:
-                            <img src="{{ $gambar->temporaryUrl() }}">
-                        @endif
-                        <div class="custom-file form-group">
-                            <input type="file" wire:model='gambar' class="custom-file-input tw-rounded-lg" id="gambar">
-                            <label class="custom-file-label" for="gambar">Upload foto barang</label>
-                            @error('gambar') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="kode_item">Kode Barang</label>
-                                    <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="kode_item" id="kode_item" wire:model='kode_item'>
-                                    @error('kode_item') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
+                                <input type="hidden" wire:model='dataId'>
+                                <input type="hidden" wire:model="gambarLama">
+                                @if ($gambar != NULL)
+                                    <img src="{{ $gambar->temporaryUrl() }}" class="tw-rounded-lg tw-object-cover tw-h-full tw-w-full mb-3">
+                                @else
+                                    <img src="{{ url('storage/'.$gambarLama) }}" class="tw-rounded-lg tw-object-cover tw-h-full tw-w-full mb-3">
+                                @endif
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="nama_item">Nama Barang</label>
-                                    <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="nama_item" id="nama_item" wire:model='nama_item'>
-                                    @error('nama_item') <span class="text-danger">{{ $message }}</span> @enderror
+                                <div class="custom-file form-group">
+                                    <input type="file" wire:model='gambar' class="custom-file-input tw-rounded-lg" id="gambar">
+                                    <label class="custom-file-label" for="gambar">Upload foto barang</label>
+                                    @error('gambar') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label for="edit_id_jenis">Nama Jenis</label>
-                                    <div wire:ignore>
-                                        <select class="form-control tw-rounded-lg" name="edit_id_jenis" id="edit_id_jenis" wire:model='id_jenis'>
-                                            @foreach ($jenis as $jeniss)
-                                            <option value="{{ $jeniss->id }}">{{ $jeniss->nama_jenis }}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="kode_item">Kode Barang</label>
+                                            <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="kode_item" id="kode_item" wire:model='kode_item'>
+                                            @error('kode_item') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
-                                    @error('id_jenis') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label for="edit_id_merek">Nama Merek</label>
-                                    <div wire:ignore>
-                                        <select class="form-control tw-rounded-lg" name="edit_id_merek" id="edit_id_merek" wire:model='id_merek'>
-                                            @foreach ($mereks as $merek)
-                                            <option value="{{ $merek->id }}">{{ $merek->nama_merek }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="nama_item">Nama Barang</label>
+                                            <input type="text" class="form-control tw-rounded-lg tw-uppercase" name="nama_item" id="nama_item" wire:model='nama_item'>
+                                            @error('nama_item') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
-                                    @error('id_merek') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label for="edit_id_satuan">Nama Satuan</label>
-                                    <div wire:ignore>
-                                        <select class="form-control tw-rounded-lg" name="edit_id_satuan" id="edit_id_satuan" wire:model='id_satuan'>
-                                            @foreach ($satuans as $satuan)
-                                            <option value="{{ $satuan->id }}">{{ $satuan->nama_satuan }}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="edit_id_jenis">Nama Jenis</label>
+                                            <div wire:ignore>
+                                                <select class="form-control tw-rounded-lg" name="edit_id_jenis" id="edit_id_jenis" wire:model='id_jenis'>
+                                                    @foreach ($jenis as $jeniss)
+                                                    <option value="{{ $jeniss->id }}">{{ $jeniss->nama_jenis }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('id_jenis') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
-                                    @error('id_satuan') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="edit_id_kategori">Nama Kategori</label>
-                                    <div wire:ignore>
-                                        <select class="form-control tw-rounded-lg" name="edit_id_kategori" id="edit_id_kategori" wire:model='id_kategori'>
-                                            @foreach ($kategoris as $kategori)
-                                            <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="edit_id_merek">Nama Merek</label>
+                                            <div wire:ignore>
+                                                <select class="form-control tw-rounded-lg" name="edit_id_merek" id="edit_id_merek" wire:model='id_merek'>
+                                                    @foreach ($mereks as $merek)
+                                                    <option value="{{ $merek->id }}">{{ $merek->nama_merek }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('id_merek') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
-                                    @error('id_kategori') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="edit_id_rak">Lokasi Rak</label>
-                                    <div wire:ignore>
-                                        <select class="form-control tw-rounded-lg" name="edit_id_rak" id="edit_id_rak" wire:model='id_rak'>
-                                            @foreach ($raks as $rak)
-                                            <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="edit_id_satuan">Nama Satuan</label>
+                                            <div wire:ignore>
+                                                <select class="form-control tw-rounded-lg" name="edit_id_satuan" id="edit_id_satuan" wire:model='id_satuan'>
+                                                    @foreach ($satuans as $satuan)
+                                                    <option value="{{ $satuan->id }}">{{ $satuan->nama_satuan }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('id_satuan') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
-                                    @error('id_rak') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="edit_id_kategori">Nama Kategori</label>
+                                            <div wire:ignore>
+                                                <select class="form-control tw-rounded-lg" name="edit_id_kategori" id="edit_id_kategori" wire:model='id_kategori'>
+                                                    @foreach ($kategoris as $kategori)
+                                                    <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('id_kategori') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="edit_id_rak">Lokasi Rak</label>
+                                            <div wire:ignore>
+                                                <select class="form-control tw-rounded-lg" name="edit_id_rak" id="edit_id_rak" wire:model='id_rak'>
+                                                    @foreach ($raks as $rak)
+                                                    <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('id_rak') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="keterangan">Keterangan</label>
+                                    <textarea class="form-control tw-rounded-lg" name="keterangan" id="keterangan" wire:model='keterangan' style="height: 100px"></textarea>
+                                    @error('keterangan') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="keterangan">Keterangan</label>
-                            <textarea class="form-control tw-rounded-lg" name="keterangan" id="keterangan" wire:model='keterangan' style="height: 100px"></textarea>
-                            @error('keterangan') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="modal-footer">
