@@ -2,24 +2,52 @@
 
 namespace App\Http\Livewire\Laporan;
 
+use Carbon\Carbon;
+use App\Models\User;
 use Livewire\Component;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Persediaan;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 
 class SaldoAwalItem extends Component
 {
+    public $id_user;
+    public $dari_tanggal, $sampai_tanggal;
+
     public function render()
     {
-        $data = Persediaan::select('persediaan.id', 'persediaan.tanggal', 'persediaan.keterangan', 'persediaan.qty', 'data_barang.nama_item' ,'users.name')
-                    ->join('data_barang', 'data_barang.id', 'persediaan.id_barang')
-                    ->join('users', 'users.id', 'persediaan.id_user')
-                    ->where('status', 'Balance')
-                    ->get();
+        if( $this->id_user == 'ALL' )
+        {
+            $data = Persediaan::select('persediaan.id', 'persediaan.tanggal', 'persediaan.keterangan', 'persediaan.qty', 'data_barang.nama_item' ,'users.name')
+                        ->join('data_barang', 'data_barang.id', 'persediaan.id_barang')
+                        ->join('users', 'users.id', 'persediaan.id_user')
+                        ->where('status', 'Balance')
+                        ->whereBetween('tanggal', [$this->dari_tanggal, $this->sampai_tanggal])
+                        ->get();
+        } else
+        {
+            $data = Persediaan::select('persediaan.id', 'persediaan.tanggal', 'persediaan.keterangan', 'persediaan.qty', 'data_barang.nama_item' ,'users.name')
+                        ->join('data_barang', 'data_barang.id', 'persediaan.id_barang')
+                        ->join('users', 'users.id', 'persediaan.id_user')
+                        ->where('status', 'Balance')
+                        ->where('persediaan.id_user', $this->id_user)
+                        ->whereBetween('tanggal', [$this->dari_tanggal, $this->sampai_tanggal])
+                        ->get();
+        }
+        
 
-        return view('livewire.laporan.saldo-awal-item', compact('data'))
+        $users = User::select('id', 'name')->get();
+
+        return view('livewire.laporan.saldo-awal-item', compact('data', 'users'))
             ->extends('layouts.apps', ['title' => 'Laporan Inventory - Saldo Awal Barang']);
+    }
+
+    public function mount()
+    {
+        $this->id_user          = 'ALL';
+        $this->dari_tanggal     = Carbon::now()->startOfMonth()->toDateTimeLocalString();;
+        $this->sampai_tanggal   = Carbon::now()->endOfMonth()->toDateTimeLocalString();;
     }
 
     public function exportExcel($id_barang, $dari_tanggal, $sampai_tanggal)

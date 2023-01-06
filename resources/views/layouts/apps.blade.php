@@ -207,22 +207,27 @@
                             <li class="nav-item {{ (request()->is('admin/kartu-stock')) ? 'active' : '' }}">
                                 <a href="{{ url('admin/kartu-stock') }}" class="nav-link"><i class="far fa-pallet"></i><span>Kartu Stock</span></a>
                             </li>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown
+                                    {{ (request()->is('admin/laporan/saldo-awal-item')) ? 'active' : '' }}
+                                    {{ (request()->is('admin/laporan/barang-masuk')) ? 'active' : '' }}
+                                    {{ (request()->is('admin/laporan/barang-keluar')) ? 'active' : '' }}
+                                    {{ (request()->is('admin/laporan/barang-opname')) ? 'active' : '' }}
+                            ">
                                 <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
                                     <i class="far fa-file-archive"></i>
                                     <span>Laporan</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item">
+                                    <li class="nav-item {{ (request()->is('admin/laporan/saldo-awal-item')) ? 'active' : '' }}">
                                         <a href="{{ url('admin/laporan/saldo-awal-item') }}" class="nav-link">Saldo Awal Item</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item {{ (request()->is('admin/laporan/barang-masuk')) ? 'active' : '' }}">
                                         <a href="{{ url('admin/laporan/barang-masuk') }}" class="nav-link">Barang Masuk</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item {{ (request()->is('admin/laporan/barang-keluar')) ? 'active' : '' }}">
                                         <a href="{{ url('admin/laporan/barang-keluar') }}" class="nav-link">Barang Keluar</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item {{ (request()->is('admin/laporan/barang-opname')) ? 'active' : '' }}">
                                         <a href="{{ url('admin/laporan/barang-opname') }}" class="nav-link">Barang Opname</a>
                                     </li>
                                     </li>
