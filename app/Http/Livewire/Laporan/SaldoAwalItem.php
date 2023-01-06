@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Laporan;
 
+use App\Models\DataBarang;
 use Carbon\Carbon;
 use App\Models\User;
 use Livewire\Component;
@@ -12,13 +13,12 @@ use Illuminate\Support\Facades\DB;
 
 class SaldoAwalItem extends Component
 {
-    public $id_user;
+    public $id_user, $id_barang;
     public $dari_tanggal, $sampai_tanggal;
 
     public function render()
     {
-        $a = 0;
-        if( $this->id_user == 'ALL' )
+        if ( $this->id_user == 'ALL' && $this->id_barang == 'ALL' )
         {
             $data = Persediaan::select('persediaan.id', 'persediaan.tanggal', 'persediaan.keterangan', 'persediaan.qty', 'data_barang.nama_item' ,'users.name')
                         ->join('data_barang', 'data_barang.id', 'persediaan.id_barang')
@@ -27,7 +27,16 @@ class SaldoAwalItem extends Component
                         ->whereBetween('tanggal', [$this->dari_tanggal, $this->sampai_tanggal])
                         ->get();
 
-        } else
+        } else if ( $this->id_user == 'ALL' && $this->id_barang > 0 )
+        {
+            $data = Persediaan::select('persediaan.id', 'persediaan.tanggal', 'persediaan.keterangan', 'persediaan.qty', 'data_barang.nama_item' ,'users.name')
+                        ->join('data_barang', 'data_barang.id', 'persediaan.id_barang')
+                        ->join('users', 'users.id', 'persediaan.id_user')
+                        ->where('status', 'Balance')
+                        ->where('data_barang.id', $this->id_barang)
+                        ->whereBetween('tanggal', [$this->dari_tanggal, $this->sampai_tanggal])
+                        ->get();
+        } else if ( $this->id_user > 0 && $this->id_barang == 'ALL' )
         {
             $data = Persediaan::select('persediaan.id', 'persediaan.tanggal', 'persediaan.keterangan', 'persediaan.qty', 'data_barang.nama_item' ,'users.name')
                         ->join('data_barang', 'data_barang.id', 'persediaan.id_barang')
@@ -36,17 +45,29 @@ class SaldoAwalItem extends Component
                         ->where('persediaan.id_user', $this->id_user)
                         ->whereBetween('tanggal', [$this->dari_tanggal, $this->sampai_tanggal])
                         ->get();
+        } else if ( $this->id_user > 0 && $this->id_barang > 0 )
+        {
+            $data = Persediaan::select('persediaan.id', 'persediaan.tanggal', 'persediaan.keterangan', 'persediaan.qty', 'data_barang.nama_item' ,'users.name')
+                        ->join('data_barang', 'data_barang.id', 'persediaan.id_barang')
+                        ->join('users', 'users.id', 'persediaan.id_user')
+                        ->where('status', 'Balance')
+                        ->where('persediaan.id_user', $this->id_user)
+                        ->where('data_barang.id', $this->id_barang)
+                        ->whereBetween('tanggal', [$this->dari_tanggal, $this->sampai_tanggal])
+                        ->get();
         }
-        
-        $users = User::select('id', 'name')->get();
 
-        return view('livewire.laporan.saldo-awal-item', compact('data', 'users'))
+        $users = User::select('id', 'name')->get();
+        $barangs = DataBarang::select('id', 'nama_item')->get();
+
+        return view('livewire.laporan.saldo-awal-item', compact('data', 'users', 'barangs'))
             ->extends('layouts.apps', ['title' => 'Laporan Inventory - Saldo Awal Barang']);
     }
 
     public function mount()
     {
         $this->id_user          = 'ALL';
+        $this->id_barang        = 'ALL';
         $this->dari_tanggal     = Carbon::now()->startOfMonth()->toDateTimeLocalString();;
         $this->sampai_tanggal   = Carbon::now()->endOfMonth()->toDateTimeLocalString();;
     }

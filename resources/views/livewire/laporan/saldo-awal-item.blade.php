@@ -18,6 +18,15 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="id_barang">Nama Barang</label>
+                            <select wire:model="id_barang" id="id_barang" class="form-control tw-rounded-lg">
+                                <option value="ALL">-- Select Option --</option>
+                                @foreach ($barangs as $barang)
+                                    <option value="{{ $barang->id }}">{{ $barang->nama_item }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="dari_tanggal">Dari Tanggal</label>
                             <input type="datetime-local" wire:model='dari_tanggal' id="dari_tanggal" class="form-control tw-rounded-lg">
                         </div>
